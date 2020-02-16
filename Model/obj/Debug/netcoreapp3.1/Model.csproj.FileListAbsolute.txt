@@ -1,0 +1,3 @@
+D:\git\Hubrary\Model\obj\Debug\netcoreapp3.1\Model.csprojAssemblyReference.cache
+D:\git\Hubrary\Model\obj\Debug\netcoreapp3.1\Model.AssemblyInfoInputs.cache
+D:\git\Hubrary\Model\obj\Debug\netcoreapp3.1\Model.AssemblyInfo.cs

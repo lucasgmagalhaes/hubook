@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\Dort</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\materialDesign\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\materialDesign\material.css" />
+    <None Include="wwwroot\materialDesign\material.js" />
+    <None Include="wwwroot\materialDesign\material.min.css" />
+    <None Include="wwwroot\materialDesign\material.min.css.map" />
+    <None Include="wwwroot\materialDesign\material.min.js" />
+    <None Include="wwwroot\materialDesign\material.min.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+  </ItemGroup>
+
+
+
+</Project>
