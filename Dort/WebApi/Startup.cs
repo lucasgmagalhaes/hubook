@@ -1,14 +1,12 @@
-using AspNetCore.Identity.Dapper;
-using Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
+using Repository;
 using System;
 
 namespace WebApi
@@ -28,23 +26,13 @@ namespace WebApi
             services.AddControllers();
 
             var connectionString = Configuration.GetConnectionString("BaseIdentity");
-            var factory = new PostgreDbConnectionFactory() { ConnectionString = connectionString };
-
-            services.AddIdentity<UserSession, IdentityRole>()
-                 .AddUserManager<UserManager<UserSession>>()
-                 .AddRoleManager<RoleManager<IdentityRole>>()
-                 .AddSignInManager<SignInManager<UserSession>>()
-                 .AddDapperStores(store => store.DbConnectionFactory = factory)
-                 .AddDefaultTokenProviders();
 
             var signingConfigurations = new SigningConfigurations();
-            services.AddSingleton(signingConfigurations);
+            var dbFactory = new PostgreDbConnectionFactory() { ConnectionString = connectionString };
 
-            var tokenConfigurations = new TokenConfigurations();
-            new ConfigureFromConfigurationOptions<TokenConfigurations>(
-                Configuration.GetSection("TokenConfigurations"))
-                    .Configure(tokenConfigurations);
-            services.AddSingleton(tokenConfigurations);
+            services.AddCors();
+            services.AddSingleton(signingConfigurations);
+            services.AddSingleton(dbFactory);
 
             services.AddAuthentication(authOptions =>
             {
@@ -54,18 +42,8 @@ namespace WebApi
             {
                 var paramsValidation = bearerOptions.TokenValidationParameters;
                 paramsValidation.IssuerSigningKey = signingConfigurations.Key;
-                paramsValidation.ValidAudience = tokenConfigurations.Audience;
-                paramsValidation.ValidIssuer = tokenConfigurations.Issuer;
-
-                // Valida a assinatura de um token recebido
                 paramsValidation.ValidateIssuerSigningKey = true;
-
-                // Verifica se um token recebido ainda é válido
                 paramsValidation.ValidateLifetime = true;
-
-                // Tempo de tolerância para a expiração de um token (utilizado
-                // caso haja problemas de sincronismo de horário entre diferentes
-                // computadores envolvidos no processo de comunicação)
                 paramsValidation.ClockSkew = TimeSpan.Zero;
             });
 
@@ -78,31 +56,37 @@ namespace WebApi
                     .RequireAuthenticatedUser().Build());
             });
 
-            services.AddMvc();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
-            IWebHostEnvironment env,
-            UserManager<UserSession> userManager,
-            RoleManager<IdentityRole> roleManager)
+            IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            app.Use(async (ctx, next) =>
+            {
+                await next();
+                if (ctx.Response.StatusCode == 204)
+                {
+                    ctx.Response.ContentLength = 0;
+                }
+            });
+
+            app.UseCors(builder =>
+            builder.AllowAnyHeader()
+            .AllowAnyOrigin()
+            .AllowAnyMethod());
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
-
-            // Criação de estruturas, usuários e permissões
-            // na base do ASP.NET Identity Core (caso ainda não
-            // existam)
-            new IdentityInitializer(userManager, roleManager)
-                .Initialize();
 
             app.UseEndpoints(endpoints =>
             {

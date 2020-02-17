@@ -1,8 +1,7 @@
-﻿using AspNetCore.Identity.Dapper;
-using Npgsql;
+﻿using Npgsql;
 using System.Data;
 
-namespace Context
+namespace Repository
 {
     /// <summary>
     /// Creates a new <see cref="SqlConnection"/> instance for connecting to Microsoft SQL Server.
@@ -17,7 +16,7 @@ namespace Context
         /// <inheritdoc/>
         public IDbConnection Create()
         {
-            var sqlConnection = new NpgsqlConnection("User Id=postgres;Host=localhost;Port=5432;Database=Hubrary;Password=teste-123");
+            var sqlConnection = new NpgsqlConnection(ConnectionString);
             sqlConnection.Open();
             return sqlConnection;
         }
