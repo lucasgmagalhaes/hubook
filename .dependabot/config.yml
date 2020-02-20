@@ -1,0 +1,18 @@
+version: 1
+update_configs:
+  # Update web api
+  - package_manager: "dotnet:nuget"
+    directory: "/Dort"
+    update_schedule: "live"
+    automerged_updates:
+      - match:
+          dependency_type: "all"
+          update_type: "all"
+  # Update web app
+  - package_manager: "javascript"
+    directory: "/web"
+    update_schedule: "live"
+    automerged_updates:
+      - match:
+          dependency_type: "all"
+          update_type: "all"
