@@ -20,3 +20,4 @@ jobs:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
         api: Dort/**/*
         web-app: web/**/* 
+        repo: ./*
