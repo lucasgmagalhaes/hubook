@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Dort.Enum\Dort.Enum.csproj" />
     <ProjectReference Include="..\Repository\Dort.RepositoryImpl.csproj" />
   </ItemGroup>
 

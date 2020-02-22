@@ -1,3 +1,4 @@
+using Dort.Enum;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -24,40 +25,12 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
-            var connectionString = Configuration.GetConnectionString("BaseIdentity");
-
-            var signingConfigurations = new SigningConfigurations();
-            var dbFactory = new PostgreDbConnectionFactory() { ConnectionString = connectionString };
-
             services.AddCors();
-            services.AddHttpClient();
-            services.AddSingleton(signingConfigurations);
-            services.AddSingleton(dbFactory);
-
-            services.AddAuthentication(authOptions =>
-            {
-                authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                authOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(bearerOptions =>
-            {
-                var paramsValidation = bearerOptions.TokenValidationParameters;
-                paramsValidation.IssuerSigningKey = signingConfigurations.Key;
-                paramsValidation.ValidateIssuerSigningKey = true;
-                paramsValidation.ValidateLifetime = true;
-                paramsValidation.ClockSkew = TimeSpan.Zero;
-            });
-
-            // Ativa o uso do token como forma de autorizar o acesso
-            // a recursos deste projeto
-            services.AddAuthorization(auth =>
-            {
-                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
-                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-                    .RequireAuthenticatedUser().Build());
-            });
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
+
+            ConfigureHttp(services);
+            ConfigureSingletions(services);
+            ConfigureAuthentication(services); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,15 +57,57 @@ namespace WebApi
             .AllowAnyMethod());
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void ConfigureHttp(IServiceCollection services)
+        {
+            services.AddHttpClient();
+            services.AddHttpClient(Integration.GOOGLE_BOOK.Description(), c =>
+            {
+                c.BaseAddress = new Uri(IntegrationUrl.GOOGLE_BOOK.Description());
+            });
+        }
+
+        public void ConfigureSingletions(IServiceCollection services)
+        {
+            var connectionString = Configuration.GetConnectionString("BaseIdentity");
+
+            var signingConfigurations = new SigningConfigurations();
+            var dbFactory = new PostgreDbConnectionFactory() { ConnectionString = connectionString };
+
+            services.AddSingleton(signingConfigurations);
+            services.AddSingleton(dbFactory);
+        }
+
+        public void ConfigureAuthentication(IServiceCollection services)
+        {
+            services.AddAuthentication(authOptions =>
+            {
+                authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                authOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(bearerOptions =>
+            {
+                var paramsValidation = bearerOptions.TokenValidationParameters;
+                paramsValidation.IssuerSigningKey = new SigningConfigurations().Key;
+                paramsValidation.ValidateIssuerSigningKey = true;
+                paramsValidation.ValidateLifetime = true;
+                paramsValidation.ClockSkew = TimeSpan.Zero;
+            });
+
+            services.AddAuthorization(auth =>
+            {
+                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser().Build());
+            });
+
         }
     }
 }
