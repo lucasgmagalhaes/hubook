@@ -21,7 +21,7 @@ namespace WebApi.Controllers
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-
+        private readonly IHttpClientFactory _clientFactory;
         private readonly ILogger<AccountController> _logger;
 
         public AccountController(ILogger<AccountController> logger)
@@ -65,7 +65,7 @@ namespace WebApi.Controllers
                 HttpOnly = true,
                 IsEssential = true,
                 Secure = true,
-                Domain = "http://localhost:5000"
+                Domain = "localhost"
             };
 
             Response.Cookies.Append("SessionId", token, option);

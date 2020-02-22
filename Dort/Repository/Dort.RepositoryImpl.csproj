@@ -9,4 +9,8 @@
     <PackageReference Include="Npgsql" Version="4.1.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Dort.Repository\Dort.Repository.csproj" />
+  </ItemGroup>
+
 </Project>

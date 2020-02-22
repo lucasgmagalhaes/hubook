@@ -31,6 +31,7 @@ namespace WebApi
             var dbFactory = new PostgreDbConnectionFactory() { ConnectionString = connectionString };
 
             services.AddCors();
+            services.AddHttpClient();
             services.AddSingleton(signingConfigurations);
             services.AddSingleton(dbFactory);
 
