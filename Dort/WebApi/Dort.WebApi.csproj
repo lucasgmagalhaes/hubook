@@ -21,5 +21,4 @@
     <ProjectReference Include="..\Repository\Dort.RepositoryImpl.csproj" />
   </ItemGroup>
 
-
 </Project>

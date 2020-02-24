@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using Dort.i18n;
+using Dort.i18n.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +20,8 @@ namespace WebApi.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
+        private readonly IAppResource _localizer;
+
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -25,9 +29,16 @@ namespace WebApi.Controllers
         private readonly IHttpClientFactory _clientFactory;
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(ILogger<AccountController> logger)
+        public AccountController(ILogger<AccountController> logger, IAppResource _localizer)
         {
             _logger = logger;
+            this._localizer = _localizer;
+        }
+
+        [HttpGet]
+        public string test()
+        {
+            return this._localizer.GetResource("EnumWithoutDescription");
         }
 
         [HttpPost]
