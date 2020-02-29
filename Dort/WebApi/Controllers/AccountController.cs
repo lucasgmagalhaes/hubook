@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Security.Principal;
-using System.Threading.Tasks;
-using Dort.i18n;
-using Dort.i18n.Resources;
+﻿using Dort.WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Principal;
 
 namespace WebApi.Controllers
 {
@@ -20,30 +14,9 @@ namespace WebApi.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly IAppResource _localizer;
-
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-        private readonly IHttpClientFactory _clientFactory;
-        private readonly ILogger<AccountController> _logger;
-
-        public AccountController(ILogger<AccountController> logger, IAppResource _localizer)
-        {
-            _logger = logger;
-            this._localizer = _localizer;
-        }
-
-        [HttpGet]
-        public string test()
-        {
-            return this._localizer.GetResource("EnumWithoutDescription");
-        }
-
         [HttpPost]
         [AllowAnonymous]
-        public object Login()
+        public ActionResult<RequestResponse> Login()
         {
             ClaimsIdentity identity = new ClaimsIdentity(
                      new GenericIdentity("lucas", "Login"),
@@ -56,10 +29,10 @@ namespace WebApi.Controllers
             DateTime dataCriacao = DateTime.Now;
             DateTime dataExpiracao = DateTime.Now.AddYears(1);
 
-            var handler = new JwtSecurityTokenHandler();
+            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
             SigningConfigurations signingConfigurations = new SigningConfigurations();
 
-            var securityToken = handler.CreateToken(new SecurityTokenDescriptor
+            SecurityToken securityToken = handler.CreateToken(new SecurityTokenDescriptor
             {
                 Issuer = "",
                 Audience = "",
@@ -69,7 +42,7 @@ namespace WebApi.Controllers
                 Expires = dataExpiracao
             });
 
-            var token = handler.WriteToken(securityToken);
+            string token = handler.WriteToken(securityToken);
 
             CookieOptions option = new CookieOptions
             {
@@ -82,7 +55,7 @@ namespace WebApi.Controllers
 
             Response.Cookies.Append("SessionId", token, option);
 
-            return Ok("Sucess!");
+            return Ok(new RequestResponse() { Content = "Sucess" });
         }
     }
 }

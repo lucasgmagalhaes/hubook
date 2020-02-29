@@ -4,8 +4,4 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Dort.i18n\Dort.i18n.csproj" />
-  </ItemGroup>
-
 </Project>

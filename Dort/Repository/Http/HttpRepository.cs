@@ -1,14 +1,15 @@
 ﻿using Dort.Enum;
+using Dort.Repository.Http;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Dort.RepositoryImpl.Http
 {
-    public class HttpRepository
+    public class HttpRepository : IHttpRepository
     {
         private readonly IHttpClientFactory _clientFactory;
-        private HttpClient _client;
+        private readonly HttpClient _client;
 
         public HttpRepository(IHttpClientFactory clientFactory)
         {

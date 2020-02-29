@@ -1,6 +1,4 @@
-﻿using Dort.i18n;
-using Dort.i18n.Resources;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Reflection;
 
@@ -29,7 +27,7 @@ namespace Dort.Enum
             DescriptionAttribute attribute = (DescriptionAttribute)field.GetCustomAttribute(typeof(DescriptionAttribute));
             if (attribute == null)
             {
-                throw new NullReferenceException("EnumWithout");
+                throw new NullReferenceException("Enum withot description");
             }
 
             return attribute.Description;

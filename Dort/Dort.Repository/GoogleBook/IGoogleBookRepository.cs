@@ -1,4 +1,5 @@
 ﻿using Dort.Entity.GoogleBook;
+using System.Threading.Tasks;
 
 namespace Dort.Repository.GoogleBook
 {
@@ -9,25 +10,26 @@ namespace Dort.Repository.GoogleBook
         /// </summary>
         /// <param name="book"></param>
         /// <returns></returns>
-        SearchReponse SearchByBookName(string book);
+        Task<SearchReponse> FindByBookName(string book);
         /// <summary>
         /// Returns results where the text following this keyword is found in the author.
         /// </summary>
         /// <param name="author"></param>
         /// <returns></returns>
-        SearchReponse SearchByAuthor(string author);
+        Task<SearchReponse> FindByAuthor(string author);
         /// <summary>
         /// Returns results where the text following this keyword is found in the publisher.
         /// </summary>
         /// <param name="author"></param>
         /// <returns></returns>
-        SearchReponse SearchByPublisher(string author);
+        Task<SearchReponse> FindByPublisher(string publisher);
         /// <summary>
         /// Returns results where the text following this keyword is listed in the category list of the volume.
         /// </summary>
         /// <param name="author"></param>
         /// <returns></returns>
-        SearchReponse SearchByCategory(string category);
-        SearchReponse SearchByFilter(QueryFilter filter);
+        Task<SearchReponse> FindByCategory(string category);
+
+        Task<SearchReponse> FindByFilter(QueryFilter filter);
     }
 }
