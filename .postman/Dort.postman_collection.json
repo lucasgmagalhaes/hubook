@@ -1,0 +1,33 @@
+{
+	"info": {
+		"_postman_id": "31471b50-b08c-4202-b1f3-a792e2377489",
+		"name": "Dort",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "FindBookByName",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/book?name=torre negra",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"book"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "torre negra"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
