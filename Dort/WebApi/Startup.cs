@@ -1,7 +1,9 @@
 using Dort.Enum;
+using Dort.Migrations;
 using Dort.Repository.GoogleBook;
 using Dort.Repository.Http;
 using Dort.RepositoryImpl.Http;
+using FluentMigrator.Runner;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -16,9 +18,11 @@ namespace WebApi
 {
     public class Startup
     {
+        private readonly string dbConnection;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            dbConnection = Configuration.GetConnectionString("hubrayDB");
         }
 
         public IConfiguration Configuration { get; }
@@ -30,11 +34,10 @@ namespace WebApi
             services.AddCors();
 
             ConfigureHttp(services);
-            ConfigureSingletions(services);
+            ConfigureSingletions(services, dbConnection);
             ConfigureAuthentication(services);
 
-            services.AddScoped(typeof(IGoogleBookRepository), typeof(GoogleBookRepository));
-            services.AddScoped(typeof(IHttpRepository), typeof(HttpRepository));
+            AddScopedServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +71,16 @@ namespace WebApi
             {
                 endpoints.MapControllers();
             });
+
+            var provider = CreateServices(dbConnection);
+            using var scope = provider.CreateScope();
+            UpdateDatabase(scope.ServiceProvider);
+        }
+
+        private void AddScopedServices(IServiceCollection services)
+        {
+            services.AddScoped(typeof(IGoogleBookRepository), typeof(GoogleBookRepository));
+            services.AddScoped(typeof(IHttpRepository), typeof(HttpRepository));
         }
 
         private void ConfigureHttp(IServiceCollection services)
@@ -79,12 +92,10 @@ namespace WebApi
             });
         }
 
-        public void ConfigureSingletions(IServiceCollection services)
+        public void ConfigureSingletions(IServiceCollection services, string dbConnection)
         {
-            string connectionString = Configuration.GetConnectionString("BaseIdentity");
-
             SigningConfigurations signingConfigurations = new SigningConfigurations();
-            PostgreDbConnectionFactory dbFactory = new PostgreDbConnectionFactory() { ConnectionString = connectionString };
+            PostgreDbConnectionFactory dbFactory = new PostgreDbConnectionFactory() { ConnectionString = dbConnection };
 
             services.AddSingleton(signingConfigurations);
             services.AddSingleton(dbFactory);
@@ -112,6 +123,30 @@ namespace WebApi
                     .RequireAuthenticatedUser().Build());
             });
 
+        }
+
+        /// <summary>
+        /// Configure the dependency injection services
+        /// </summary>
+        private static IServiceProvider CreateServices(string dbConection)
+        {
+            return new ServiceCollection()
+                .AddFluentMigratorCore()
+                .ConfigureRunner(rb => rb
+                    .AddPostgres()
+                    .WithGlobalConnectionString(dbConection)
+                    .ScanIn(typeof(AddUserBookAndUserLevelTable_0001).Assembly).For.Migrations())
+                .AddLogging(lb => lb.AddFluentMigratorConsole())
+                .BuildServiceProvider(false);
+        }
+
+        /// <summary>
+        /// Update the database
+        /// </summary>
+        private static void UpdateDatabase(IServiceProvider serviceProvider)
+        {
+            var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
+            runner.MigrateUp();
         }
     }
 }

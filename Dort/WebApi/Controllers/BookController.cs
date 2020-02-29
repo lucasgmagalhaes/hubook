@@ -24,7 +24,7 @@ namespace Dort.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<RequestResponse>> FindByName([FromQuery]string name)
+        public async Task<ActionResult<RequestResponse>> FindBy([FromQuery]string name)
         {
             var response = await _bookRepository.FindByBookName(name);
             return Ok(new RequestResponse() { Content = response });

@@ -84,9 +84,9 @@ namespace Dort.Repository.GoogleBook
             throw new NotImplementedException();
         }
 
-        public async Task<SearchReponse> FindByPublisher(string author)
+        public async Task<SearchReponse> FindByPublisher(string publisher)
         {
-            throw new NotImplementedException();
+            return await _http.GetAsync<SearchReponse>($"{_baseUrl}?q=inpublisher:{publisher}");
         }
     }
 }

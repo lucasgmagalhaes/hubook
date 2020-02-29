@@ -2,3 +2,9 @@
 
 # CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
 dotnet_diagnostic.CS8632.severity = none
+
+# CA2227: Collection properties should be read only
+dotnet_diagnostic.CA2227.severity = none
+
+# CA1056: Uri properties should not be strings
+dotnet_diagnostic.CA1056.severity = none
