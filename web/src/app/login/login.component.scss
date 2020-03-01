@@ -4,6 +4,9 @@
   align-items: center;
   display: flex;
   background: url('../../assets/img/backbook.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 form {
@@ -14,7 +17,7 @@ form {
 }
 
 mat-card {
-  height: 299px;
+  height: 366px;
   width: 408px;
   display: flex;
   align-items: center;
