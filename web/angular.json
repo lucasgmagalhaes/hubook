@@ -12,7 +12,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "",
+      "prefix": "hb",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
