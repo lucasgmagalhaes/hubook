@@ -8,32 +8,26 @@ namespace Dort.Migrations
         public override void Up()
         {
             Execute.Sql(@"
-            CREATE TABLE IF NOT EXISTS user_app (
-              id SERIAL PRIMARY KEY NOT NULL,
-              name VARCHAR(120) NOT NULL,
-              email VARCHAR(120) NOT NULL,
-              is_email_validated BOOLEAN NOT NULL,
-              is_active BOOLEAN NOT NULL,
-              password VARCHAR(30) NOT NULL,
-              profile_img_url VARCHAR(200) NOT NULL
-            );
+                CREATE TABLE IF NOT EXISTS UserApp (
+                Id SERIAL PRIMARY KEY NOT NULL,
+                Name VARCHAR(120) NOT NULL,
+                Email VARCHAR(120) NOT NULL,
+                IsEmailValidated BOOLEAN NOT NULL,
+                IsActive BOOLEAN NOT NULL,
+                Password VARCHAR(30) NOT NULL,
+                Level INT NOT NULL,
+                Exp SERIAL NOT NULL,
+                LevelMaxExp SERIAL NOT NULL,
+                ProfileImgUrl VARCHAR(200) NOT NULL
+                );
 
-            CREATE TABLE IF NOT EXISTS book(
-              id SERIAL PRIMARY KEY NOT NULL,
-              google_book_id VARCHAR(120) NOT NULL,
-              user_id SERIAL NOT NULL,
-              status INT NOT NULL,
-              FOREIGN KEY(user_id) REFERENCES user_app(id)
-            );
-
-            CREATE TABLE IF NOT EXISTS user_level(
-              id SERIAL PRIMARY KEY NOT NULL,
-              user_id SERIAL NOT NULL,
-              level INT NOT NULL,
-              exp SERIAL NOT NULL,
-              level_max_exp SERIAL NOT NULL,
-              FOREIGN KEY (user_id) REFERENCES user_app(id)
-            );
+                CREATE TABLE IF NOT EXISTS UserBook (
+                Id SERIAL PRIMARY KEY NOT NULL,
+                GoogleBookId VARCHAR(120) NOT NULL,
+                UserId SERIAL NOT NULL,
+                Status INT NOT NULL,
+                FOREIGN KEY (UserId) REFERENCES UserApp (Id)
+                );
          ");
         }
 

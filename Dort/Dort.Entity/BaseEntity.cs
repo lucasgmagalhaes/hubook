@@ -1,6 +1,9 @@
-﻿namespace Dort.Entity
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Dort.Entity
 {
-    public class BaseEntity
+    public interface IBaseEntity<IdType>
     {
+        IdType Id { get; set; }
     }
 }

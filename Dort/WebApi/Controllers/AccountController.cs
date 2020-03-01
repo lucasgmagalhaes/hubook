@@ -1,4 +1,6 @@
-﻿using Dort.WebApi.Models;
+﻿using Dort.Entity;
+using Dort.Repository.Db;
+using Dort.WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,15 +16,44 @@ namespace WebApi.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
-        [HttpPost]
-        [AllowAnonymous]
-        public ActionResult<RequestResponse> Login()
+        private readonly IUserRepository _userRepository;
+
+        public AccountController(IUserRepository userRepository)
         {
+            _userRepository = userRepository;
+        }
+
+        [HttpPost("register")]
+        [AllowAnonymous]
+        public ActionResult<RequestResponse> Register(UserModel user)
+        {
+            _userRepository.Insert(new User()
+            {
+                Name = user.Name,
+                Email = user.Email,
+                Password = user.Password
+            });
+
+            return Login(user);
+        }
+
+        [HttpPost("auth")]
+        [AllowAnonymous]
+        public ActionResult<RequestResponse> Login(UserModel user)
+        {
+            var appUser = _userRepository.FindByEmailndPassword(user.Email, user.Password);
+
+            if(appUser == null)
+            {
+                BadRequest("Email or Password invalid");
+            }
+
             ClaimsIdentity identity = new ClaimsIdentity(
-                     new GenericIdentity("lucas", "Login"),
-                     new[] {
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
-                        new Claim(JwtRegisteredClaimNames.UniqueName, "lucas")
+                     new GenericIdentity(appUser.Name, "Login"),
+                     new[] 
+                     {
+                        new Claim(JwtRegisteredClaimNames.Jti, appUser.Id.ToString()),
+                        new Claim(JwtRegisteredClaimNames.UniqueName, user.Name)
                      }
                  );
 

@@ -1,7 +1,9 @@
 using Dort.Enum;
 using Dort.Migrations;
+using Dort.Repository.Db;
 using Dort.Repository.GoogleBook;
 using Dort.Repository.Http;
+using Dort.RepositoryImpl.Database;
 using Dort.RepositoryImpl.Http;
 using FluentMigrator.Runner;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -19,13 +21,11 @@ namespace WebApi
     public class Startup
     {
         private readonly string dbConnection;
+        
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
-            dbConnection = Configuration.GetConnectionString("hubrayDB");
+            dbConnection = configuration.GetConnectionString("hubrayDB");
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -81,6 +81,7 @@ namespace WebApi
         {
             services.AddScoped(typeof(IGoogleBookRepository), typeof(GoogleBookRepository));
             services.AddScoped(typeof(IHttpRepository), typeof(HttpRepository));
+            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
         }
 
         private void ConfigureHttp(IServiceCollection services)
@@ -98,7 +99,7 @@ namespace WebApi
             PostgreDbConnectionFactory dbFactory = new PostgreDbConnectionFactory() { ConnectionString = dbConnection };
 
             services.AddSingleton(signingConfigurations);
-            services.AddSingleton(dbFactory);
+            services.AddSingleton(typeof(IDbConnectionFactory), dbFactory);
         }
 
         public void ConfigureAuthentication(IServiceCollection services)

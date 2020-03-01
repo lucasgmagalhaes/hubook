@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dort.Entity", "Dort.Entity\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dort.Enum", "Dort.Enum\Dort.Enum.csproj", "{0FA787DF-569C-4BFD-81F5-30CC7440F69F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dort.Utils", "Dort.Utils\Dort.Utils.csproj", "{5F89CB34-62EA-4CBD-BE28-A5BCEC358736}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{0FA787DF-569C-4BFD-81F5-30CC7440F69F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FA787DF-569C-4BFD-81F5-30CC7440F69F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FA787DF-569C-4BFD-81F5-30CC7440F69F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F89CB34-62EA-4CBD-BE28-A5BCEC358736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F89CB34-62EA-4CBD-BE28-A5BCEC358736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F89CB34-62EA-4CBD-BE28-A5BCEC358736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F89CB34-62EA-4CBD-BE28-A5BCEC358736}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

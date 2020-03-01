@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Map\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 

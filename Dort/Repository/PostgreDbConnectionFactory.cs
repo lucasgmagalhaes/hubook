@@ -14,7 +14,7 @@ namespace Repository
         public string ConnectionString { get; set; }
 
         /// <inheritdoc/>
-        public IDbConnection Create()
+        public IDbConnection Connect()
         {
             var sqlConnection = new NpgsqlConnection(ConnectionString);
             sqlConnection.Open();
