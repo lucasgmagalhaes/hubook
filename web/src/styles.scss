@@ -3,10 +3,20 @@
   margin: 0;
 }
 
-body {
+html, body, app-root {
   height: 100%;
   width: 100%;
+  margin: 0;
+  }
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  display: flex;
+  flex-direction: column;
+  background-color: #fdfdfd;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mat-form-field input {
+  font-size: 18px;
+}

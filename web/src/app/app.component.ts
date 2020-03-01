@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import webAppVersion from './version';
+import { Router } from '@angular/router';
+import routes from './routes';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +10,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'web';
+  title = 'Hubrary';
+
+  constructor(private _router: Router){
+    if (!environment.production) {
+      console.info(`App running in development mode. Version: ${webAppVersion}`);
+    }
+  }
+
+  isLoginPage() {
+    return this._router.url.includes(routes.login);
+  }
 }

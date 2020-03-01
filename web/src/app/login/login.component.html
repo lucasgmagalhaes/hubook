@@ -1,0 +1,20 @@
+<div class="page">
+  <mat-card>
+    <form>
+      <h2>Welcome back</h2>
+      <h4>We are glad to see you here</h4>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput />
+      </mat-form-field>
+      <button type="button" (click)="login()" mat-raised-button color="primary">
+        Login
+      </button>
+    </form>
+  </mat-card>
+</div>
