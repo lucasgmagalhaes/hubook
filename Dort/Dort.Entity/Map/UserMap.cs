@@ -9,7 +9,7 @@ namespace Dort.Entity.Map
     {
         public UserMap()
         {
-
+            Map(p => p.IsActive).ToColumn("is_active");
         }
     }
 }

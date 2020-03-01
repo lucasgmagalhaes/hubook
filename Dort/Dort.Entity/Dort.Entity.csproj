@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper.FluentMap" Version="1.8.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -12,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Map\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 
