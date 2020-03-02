@@ -1,0 +1,23 @@
+@import "~@angular/material/theming";
+@include mat-core();
+
+/* ======== Angular material custom themes ======== */
+/* Colors https://material.io/archive/guidelines/style/color.html#color-color-palette */
+
+$light-primary: mat-palette($mat-deep-purple);
+$light-accent: mat-palette($mat-brown);
+$light-warn: mat-palette($mat-lime);
+
+$light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
+
+@include angular-material-theme($light-theme);
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline,
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #795548;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-label,
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-label {
+  color: #795548;
+}
