@@ -20,4 +20,9 @@ namespace Dort.Enum
         READ = 1,
         WANT_TO_READ = 2
     }
+
+    public enum Resource
+    {
+        ENUM_WITHOUT_DESCRIPTION = 0
+    }
 }

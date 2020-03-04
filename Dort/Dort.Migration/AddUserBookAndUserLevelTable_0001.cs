@@ -33,9 +33,8 @@ namespace Dort.Migrations
 
         public override void Down()
         {
-            Delete.Table("'user'");
-            Delete.Table("book");
-            Delete.Table("user_level");
+            Delete.Table("UserApp");
+            Delete.Table("UserBook");
         }
     }
 }
