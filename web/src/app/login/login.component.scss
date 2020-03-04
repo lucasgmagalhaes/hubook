@@ -28,3 +28,17 @@ h4,
 h2 {
   color: #585858;
 }
+
+button {
+  height: 47px;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline,
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #795548;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-label,
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-label {
+  color: #795548;
+}
