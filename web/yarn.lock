@@ -1889,11 +1889,12 @@ html-escaper@^2.0.0:
   resolved "https://registry.yarnpkg.com/html-escaper/-/html-escaper-2.0.0.tgz#71e87f931de3fe09e56661ab9a29aadec707b491"
   integrity sha512-a4u9BeERWGu/S8JiWEAQcdrg9v4QArtP9keViQjGMdff20fBdd8waotXaNmODqBe6uZ3Nafi7K/ho4gCQHV3Ig==
 
-html-insert-assets@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/html-insert-assets/-/html-insert-assets-0.2.0.tgz#9b54223616aa85056dd637231e73029771c12d47"
-  integrity sha512-UsI4Bvczhk6kvQZXkSlAsy0R6jsdpVDpkmtpmO7NfYMaJ9N06u/AnsQOwL14uujEy3iVdW9w0UvAz/VMNZYAWw==
+html-insert-assets@0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/html-insert-assets/-/html-insert-assets-0.5.0.tgz#c9bed8f04689c9aad3f2be26077a9e05e678dee5"
+  integrity sha512-HFvbKEkQOUZZkYLOAcMJKxpT7U16wPhIsnHAY1XXtTWR4urusQeRFgkONw3HdAQbKPtONOldq/Nse9KEZyYuqQ==
   dependencies:
+    mkdirp "^0.5.1"
     parse5 "^5.1.1"
 
 http-cache-semantics@^3.8.1:
