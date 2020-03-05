@@ -54,7 +54,7 @@
     "karma-jasmine-html-reporter": "^1.4.2",
     "karma-requirejs": "1.1.0",
     "karma-sourcemap-loader": "0.3.7",
-    "protractor": "5.4.2",
+    "protractor": "5.4.3",
     "requirejs": "2.3.6",
     "rollup": "1.32.0",
     "rollup-plugin-commonjs": "10.1.0",
