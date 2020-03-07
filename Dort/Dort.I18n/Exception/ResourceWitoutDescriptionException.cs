@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Dort.Enum;
+using System;
 using System.Runtime.Serialization;
 
-namespace Dort.Exceptions
+namespace Dort.I18n.Exceptions
 {
     public class ResourceWitoutDescriptionException : Exception
     {
@@ -10,7 +11,7 @@ namespace Dort.Exceptions
         /// <br/>
         /// <b>No description for resource was informed in selected culture.</b>
         /// </summary>
-        public ResourceWitoutDescriptionException() : base("No description for resource was informed in selected culture.") { }
+        public ResourceWitoutDescriptionException() : base(CultureManager.Get(Resource.RESOURCE_WITHOUT_DESCRIPTION)) { }
 
         public ResourceWitoutDescriptionException(string? message) : base(message) { }
 

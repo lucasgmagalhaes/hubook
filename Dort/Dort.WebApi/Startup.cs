@@ -1,10 +1,13 @@
 using Dort.Enum;
+using Dort.I18n;
 using Dort.Migrations;
 using Dort.Repository.Db;
 using Dort.Repository.GoogleBook;
 using Dort.Repository.Http;
 using Dort.RepositoryImpl.Database;
 using Dort.RepositoryImpl.Http;
+using Dort.WebApi.Extensions;
+using Dort.WebApi.Filters;
 using FluentMigrator.Runner;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -21,16 +24,19 @@ namespace WebApi
     public class Startup
     {
         private readonly string dbConnection;
-        
+
         public Startup(IConfiguration configuration)
         {
             dbConnection = configuration.GetConnectionString("hubrayDB");
+
+            CultureManager.AddResource("en", new Language_en());
+            CultureManager.AddResource("pt-br", new Language_pt_br());
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(options => options.Filters.Add(new HttpResponseExceptionFilter()));
             services.AddCors();
 
             ConfigureHttp(services);
@@ -49,14 +55,7 @@ namespace WebApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.Use(async (ctx, next) =>
-            {
-                await next();
-                if (ctx.Response.StatusCode == 204)
-                {
-                    ctx.Response.ContentLength = 0;
-                }
-            });
+            app.UseRequestCulture();
 
             app.UseCors(builder =>
             builder.AllowAnyHeader()
@@ -72,8 +71,8 @@ namespace WebApi
                 endpoints.MapControllers();
             });
 
-            var provider = CreateServices(dbConnection);
-            using var scope = provider.CreateScope();
+            IServiceProvider provider = CreateServices(dbConnection);
+            using IServiceScope scope = provider.CreateScope();
             UpdateDatabase(scope.ServiceProvider);
         }
 
@@ -146,7 +145,7 @@ namespace WebApi
         /// </summary>
         private static void UpdateDatabase(IServiceProvider serviceProvider)
         {
-            var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
+            IMigrationRunner runner = serviceProvider.GetRequiredService<IMigrationRunner>();
             runner.MigrateUp();
         }
     }

@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Dort.Enum\Dort.Enum.csproj" />
-    <ProjectReference Include="..\Dort.Exceptions\Dort.Exceptions.csproj" />
   </ItemGroup>
 
 </Project>

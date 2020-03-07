@@ -1,17 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Dort.WebApi.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Dort.WebApi.Models
 {
+
     public class UserModel
     {
-        [Required]
+        [DortRequired]
         public string Name { get; set; }
 
-        [Required]
+        [DortRequired]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [DortRequired]
+        [MinLength(3)]
         public string Password { get; set; }
     }
 }

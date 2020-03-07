@@ -2,7 +2,7 @@
 
 namespace Dort.I18n
 {
-    public interface IResourceCollection
+    public interface ICulture
     {
         public string Value(Resource resource);
     }

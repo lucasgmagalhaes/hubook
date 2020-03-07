@@ -23,6 +23,8 @@ namespace Dort.Enum
 
     public enum Resource
     {
-        ENUM_WITHOUT_DESCRIPTION = 0
+        ENUM_WITHOUT_DESCRIPTION = 0,
+        RESOURCE_WITHOUT_DESCRIPTION = 1,
+        LANGUAGE_WAS_NOT_SETTED = 2,
     }
 }

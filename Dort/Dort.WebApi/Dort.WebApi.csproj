@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Dort.Enum\Dort.Enum.csproj" />
+    <ProjectReference Include="..\Dort.I18n\Dort.I18n.csproj" />
     <ProjectReference Include="..\Dort.Migration\Dort.Migrations.csproj" />
     <ProjectReference Include="..\Dort.RepositoryImpl\Dort.RepositoryImpl.csproj" />
   </ItemGroup>

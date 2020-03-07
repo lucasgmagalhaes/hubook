@@ -23,9 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dort.Enum", "Dort.Enum\Dort
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dort.Utils", "Dort.Utils\Dort.Utils.csproj", "{5F89CB34-62EA-4CBD-BE28-A5BCEC358736}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dort.I18n", "Dort.I18n\Dort.I18n.csproj", "{9CD07880-1049-438E-A4B2-2CEEB3861FAA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dort.Exceptions", "Dort.Exceptions\Dort.Exceptions.csproj", "{F63449DD-9736-4A14-A023-B00D24ED9C50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dort.I18n", "Dort.I18n\Dort.I18n.csproj", "{9CD07880-1049-438E-A4B2-2CEEB3861FAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,10 +63,6 @@ Global
 		{9CD07880-1049-438E-A4B2-2CEEB3861FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CD07880-1049-438E-A4B2-2CEEB3861FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CD07880-1049-438E-A4B2-2CEEB3861FAA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F63449DD-9736-4A14-A023-B00D24ED9C50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F63449DD-9736-4A14-A023-B00D24ED9C50}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F63449DD-9736-4A14-A023-B00D24ED9C50}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F63449DD-9736-4A14-A023-B00D24ED9C50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
