@@ -34,7 +34,7 @@ namespace Dort.I18n
         public static string Get(Resource resourceName)
         {
             if (string.IsNullOrEmpty(Lang))
-                throw new LanguageException("Language was not setted");
+                return "";
 
             if (_cultures.TryGetValue(Lang, out ICulture resource))
                 return resource.Value(resourceName);

@@ -6,6 +6,7 @@ using Dort.Repository.GoogleBook;
 using Dort.Repository.Http;
 using Dort.RepositoryImpl.Database;
 using Dort.RepositoryImpl.Http;
+using Dort.WebApi;
 using Dort.WebApi.Extensions;
 using Dort.WebApi.Filters;
 using FluentMigrator.Runner;
@@ -13,17 +14,32 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Repository;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
+using System.IO;
+using System.Reflection;
 
 namespace WebApi
 {
     public class Startup
     {
         private readonly string dbConnection;
+
+        private static string XmlCommentsFilePath
+        {
+            get
+            {
+                string xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                return Path.Combine(AppContext.BaseDirectory, xmlFile);
+            }
+        }
 
         public Startup(IConfiguration configuration)
         {
@@ -39,6 +55,30 @@ namespace WebApi
             services.AddControllers(options => options.Filters.Add(new HttpResponseExceptionFilter()));
             services.AddCors();
 
+            services.AddApiVersioning(p =>
+            {
+                // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
+                p.ReportApiVersions = true;
+            });
+
+            services.AddVersionedApiExplorer(p =>
+            {
+                p.GroupNameFormat = "'v'VVV";
+                p.SubstituteApiVersionInUrl = true;
+            });
+
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
+            services.AddSwaggerGen(
+                options =>
+                {
+                    // add a custom operation filter which sets default values
+                    options.OperationFilter<SwaggerDefaultValues>();
+
+                    // integrate xml comments
+                    options.IncludeXmlComments(XmlCommentsFilePath);
+                });
+
             ConfigureHttp(services);
             ConfigureSingletions(services, dbConnection);
             ConfigureAuthentication(services);
@@ -48,11 +88,32 @@ namespace WebApi
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
-            IWebHostEnvironment env)
+            IWebHostEnvironment env,
+            IApiVersionDescriptionProvider provider)
         {
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
+
+            app.UseApiVersioning();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseSwagger();
+                app.UseSwaggerUI(options =>
+                {
+                    foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
+                    {
+                        options.SwaggerEndpoint(
+                        $"/swagger/{description.GroupName}/swagger.json",
+                        description.GroupName.ToLowerInvariant());
+                    }
+
+                    options.RoutePrefix = string.Empty;
+                    options.DocExpansion(DocExpansion.List);
+                });
             }
 
             app.UseRequestCulture();
@@ -63,16 +124,9 @@ namespace WebApi
             .AllowAnyMethod());
 
             app.UseHttpsRedirection();
-            app.UseRouting();
-            app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
-            IServiceProvider provider = CreateServices(dbConnection);
-            using IServiceScope scope = provider.CreateScope();
+            IServiceProvider _provider = CreateServices(dbConnection);
+            using IServiceScope scope = _provider.CreateScope();
             UpdateDatabase(scope.ServiceProvider);
         }
 
@@ -92,7 +146,7 @@ namespace WebApi
             });
         }
 
-        public void ConfigureSingletions(IServiceCollection services, string dbConnection)
+        private void ConfigureSingletions(IServiceCollection services, string dbConnection)
         {
             SigningConfigurations signingConfigurations = new SigningConfigurations();
             PostgreDbConnectionFactory dbFactory = new PostgreDbConnectionFactory() { ConnectionString = dbConnection };
@@ -101,7 +155,7 @@ namespace WebApi
             services.AddSingleton(typeof(IDbConnectionFactory), dbFactory);
         }
 
-        public void ConfigureAuthentication(IServiceCollection services)
+        private void ConfigureAuthentication(IServiceCollection services)
         {
             services.AddAuthentication(authOptions =>
             {

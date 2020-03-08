@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 namespace Dort.WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [ApiVersion("2")]
+    [Route("v{version:apiVersion}/[controller]")]
+    [Produces("application/json")]
     public class BookController : ControllerBase
     {
         public IGoogleBookRepository _bookRepository;
