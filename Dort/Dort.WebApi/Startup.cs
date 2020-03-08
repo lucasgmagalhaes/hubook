@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Repository;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -43,6 +44,19 @@ namespace WebApi
             }
         }
 
+        private static string Version
+        {
+            get
+            {
+                var assembly = Assembly.GetEntryAssembly();
+                var version = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+
+                return version != null
+                    ? version.InformationalVersion
+                    : "1.0.0.0";
+            }
+        }
+
         public Startup(IConfiguration configuration)
         {
             dbConnection = configuration.GetConnectionString("hubrayDB");
@@ -55,6 +69,7 @@ namespace WebApi
         {
             services.AddControllers(options => options.Filters.Add(new HttpResponseExceptionFilter()));
             services.AddCors();
+            services.AddLogging();
 
             ConfigureApiVersioning(services);
 
@@ -68,8 +83,10 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
             IWebHostEnvironment env,
+            ILoggerFactory loggerFactory,
             IApiVersionDescriptionProvider provider)
         {
+            Console.WriteLine($"Running API in version: {Version}");
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
