@@ -9,6 +9,7 @@ using Dort.RepositoryImpl.Http;
 using Dort.WebApi;
 using Dort.WebApi.Extensions;
 using Dort.WebApi.Filters;
+using Dort.WebApi.Swagger;
 using FluentMigrator.Runner;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +26,7 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.IO;
 using System.Reflection;
+using WebApi.Security;
 
 namespace WebApi
 {
@@ -45,8 +47,7 @@ namespace WebApi
         {
             dbConnection = configuration.GetConnectionString("hubrayDB");
 
-            CultureManager.AddResource("en", new Language_en());
-            CultureManager.AddResource("pt-br", new Language_pt_br());
+            AddCultures();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -55,6 +56,58 @@ namespace WebApi
             services.AddControllers(options => options.Filters.Add(new HttpResponseExceptionFilter()));
             services.AddCors();
 
+            ConfigureApiVersioning(services);
+
+            ConfigureExternalHttp(services);
+            ConfigureSingletions(services, dbConnection);
+            ConfigureAuthentication(services);
+
+            AddScopedServices(services);
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app,
+            IWebHostEnvironment env,
+            IApiVersionDescriptionProvider provider)
+        {
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
+
+            app.UseApiVersioning();
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                AddSwaggerInAppBuilder(app, provider);
+            }
+
+            app.UseRequestCulture();
+
+            ConfigureCors(app);
+
+            app.UseHttpsRedirection();
+
+            IServiceProvider _provider = CreateServices(dbConnection);
+            using IServiceScope scope = _provider.CreateScope();
+            UpdateDatabase(scope.ServiceProvider);
+        }
+
+        /// <summary>
+        /// Add Cultures to aplication.
+        /// </summary>
+        private void AddCultures()
+        {
+            CultureManager.AddResource("en", new Language_en());
+            CultureManager.AddResource("pt-br", new Language_pt_br());
+        }
+
+        /// <summary>
+        /// Configure controllers versions to Swagger
+        /// </summary>
+        /// <param name="services"></param>
+        private void ConfigureApiVersioning(IServiceCollection services)
+        {
             services.AddApiVersioning(p =>
             {
                 // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
@@ -78,58 +131,46 @@ namespace WebApi
                     // integrate xml comments
                     options.IncludeXmlComments(XmlCommentsFilePath);
                 });
-
-            ConfigureHttp(services);
-            ConfigureSingletions(services, dbConnection);
-            ConfigureAuthentication(services);
-
-            AddScopedServices(services);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app,
-            IWebHostEnvironment env,
-            IApiVersionDescriptionProvider provider)
+        /// <summary>
+        /// Configure CORS permitions
+        /// </summary>
+        /// <param name="app"></param>
+        private void ConfigureCors(IApplicationBuilder app)
         {
-            app.UseRouting();
-            app.UseAuthorization();
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
-
-            app.UseApiVersioning();
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-
-                app.UseSwagger();
-                app.UseSwaggerUI(options =>
-                {
-                    foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
-                    {
-                        options.SwaggerEndpoint(
-                        $"/swagger/{description.GroupName}/swagger.json",
-                        description.GroupName.ToLowerInvariant());
-                    }
-
-                    options.RoutePrefix = string.Empty;
-                    options.DocExpansion(DocExpansion.List);
-                });
-            }
-
-            app.UseRequestCulture();
-
             app.UseCors(builder =>
             builder.AllowAnyHeader()
             .AllowAnyOrigin()
             .AllowAnyMethod());
-
-            app.UseHttpsRedirection();
-
-            IServiceProvider _provider = CreateServices(dbConnection);
-            using IServiceScope scope = _provider.CreateScope();
-            UpdateDatabase(scope.ServiceProvider);
         }
 
+        /// <summary>
+        /// Add Swagger endpoints
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="provider"></param>
+        private void AddSwaggerInAppBuilder(IApplicationBuilder app, IApiVersionDescriptionProvider provider)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
+                {
+                    options.SwaggerEndpoint(
+                    $"/swagger/{description.GroupName}/swagger.json",
+                    description.GroupName.ToLowerInvariant());
+                }
+
+                options.RoutePrefix = string.Empty;
+                options.DocExpansion(DocExpansion.List);
+            });
+        }
+
+        /// <summary>
+        /// Add all scped services
+        /// </summary>
+        /// <param name="services"></param>
         private void AddScopedServices(IServiceCollection services)
         {
             services.AddScoped(typeof(IGoogleBookRepository), typeof(GoogleBookRepository));
@@ -137,7 +178,10 @@ namespace WebApi
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
         }
 
-        private void ConfigureHttp(IServiceCollection services)
+        /// <summary>
+        /// Configure address for external urls
+        /// </summary>
+        private void ConfigureExternalHttp(IServiceCollection services)
         {
             services.AddHttpClient();
             services.AddHttpClient(Integration.GOOGLE_BOOK.Description(), c =>
@@ -146,6 +190,9 @@ namespace WebApi
             });
         }
 
+        /// <summary>
+        /// Add all singletion services
+        /// </summary>
         private void ConfigureSingletions(IServiceCollection services, string dbConnection)
         {
             SigningConfigurations signingConfigurations = new SigningConfigurations();

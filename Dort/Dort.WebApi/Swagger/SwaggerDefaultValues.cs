@@ -4,7 +4,11 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Linq;
 
-namespace Dort.WebApi
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Class got from https://github.com/microsoft/aspnet-api-versioning/tree/master/samples/aspnetcore/SwaggerSample
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+namespace Dort.WebApi.Swagger
 {
     /// <summary>
     /// Represents the Swagger/Swashbuckle operation filter used to document the implicit API version parameter.

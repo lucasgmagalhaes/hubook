@@ -5,7 +5,11 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 
-namespace Dort.WebApi
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Class got from https://github.com/microsoft/aspnet-api-versioning/tree/master/samples/aspnetcore/SwaggerSample
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+namespace Dort.WebApi.Swagger
 {
     /// <summary>
     /// Configures the Swagger generation options.
@@ -40,10 +44,10 @@ namespace Dort.WebApi
         {
             OpenApiInfo info = new OpenApiInfo()
             {
-                Title = "Sample API",
+                Title = "Dort API",
                 Version = description.ApiVersion.ToString(),
-                Description = "A sample application with Swagger, Swashbuckle, and API versioning.",
-                Contact = new OpenApiContact() { Name = "Bill Mei", Email = "bill.mei@somewhere.com" },
+                Description = "Dort api used by the SPA",
+                Contact = new OpenApiContact() { Name = "Bill Mei", Email = "lucasgsm88@gmail.com" },
                 License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
             };
 
