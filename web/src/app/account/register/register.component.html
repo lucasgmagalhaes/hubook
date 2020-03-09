@@ -1,8 +1,14 @@
-<!-- <div class="page">
+<div class="page">
   <mat-card>
     <form>
       <h2>Welcome back reader</h2>
       <h4>We are glad to see you here</h4>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput />
+      </mat-form-field>
+
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
         <input matInput />
@@ -12,9 +18,17 @@
         <mat-label>Password</mat-label>
         <input type="password" matInput />
       </mat-form-field>
-      <button type="button" (click)="login()" mat-raised-button color="accent">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm password</mat-label>
+        <input type="password" matInput />
+      </mat-form-field>
+
+      <button type="button" mat-raised-button color="accent">
         Login
       </button>
+
+      <a [routerLink]="login">Back to login</a>
     </form>
   </mat-card>
-</div> -->
+</div>

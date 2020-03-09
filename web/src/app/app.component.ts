@@ -18,7 +18,7 @@ export class AppComponent {
     }
   }
 
-  isLoginPage() {
-    return this._router.url.includes(routes.login);
+  isAuthPage() {
+    return this._router.url.includes(routes.login) || this._router.url.includes(routes.register);
   }
 }

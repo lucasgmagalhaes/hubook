@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   display: flex;
-  background: url('../../assets/img/backbook.jpg');
+  background: url("../../../assets/img/backbook.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -17,11 +17,25 @@ form {
 }
 
 mat-card {
-  height: 366px;
+  min-height: 366px;
   width: 408px;
   display: flex;
   align-items: center;
   text-align: center;
+  animation-name: showing;
+  animation-duration: 0.4s;
+}
+
+@keyframes showing {
+  from {
+    top: 30px;
+    opacity: 0.5;
+  }
+
+  to {
+    top: 0;
+    opacity: 1;
+  }
 }
 
 h4,
@@ -33,12 +47,9 @@ button {
   height: 47px;
 }
 
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline,
-.mat-form-field-appearance-outline .mat-form-field-outline {
-  color: #795548;
+a {
+  padding-top: 15px;
+  text-align: start;
+  text-decoration: none;
 }
 
-.mat-form-field-appearance-outline .mat-form-field-label,
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-label {
-  color: #795548;
-}
