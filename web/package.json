@@ -29,7 +29,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.900.5",
     "@angular/bazel": "~9.0.1",
-    "@angular/cli": "~9.0.5",
+    "@angular/cli": "~9.0.6",
     "@angular/compiler-cli": "~9.0.4",
     "@angular/language-service": "~9.0.6",
     "@bazel/bazel": "2.1.0",
