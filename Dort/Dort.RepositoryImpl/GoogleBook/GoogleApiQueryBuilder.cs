@@ -67,7 +67,7 @@ namespace Dort.RepositoryImpl.GoogleBook
 
         public IGoogleApiQueryBuilder SetMaxResults(int maxResults)
         {
-            if (maxResults <= 40 || maxResults > 0)
+            if (maxResults <= 40 && maxResults > 0)
                 _maxResults = maxResults;
 
             return this;

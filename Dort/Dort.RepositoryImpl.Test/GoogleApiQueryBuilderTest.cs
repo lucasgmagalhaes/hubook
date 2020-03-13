@@ -1,3 +1,4 @@
+using Dort.Enum;
 using Dort.Enum.GoogleBooksApiEnum;
 using Dort.Repository.GoogleBook;
 using Dort.RepositoryImpl.GoogleBook;
@@ -12,8 +13,8 @@ namespace Dort.RepositoryImpl.Test
         private const string _publisher = "Anyone";
         private const string _subject = "A lot of things";
         private const string _volumeId = "Aclask_Aaeaef12";
-        private const int _startIndex = 0;
-        private const int _maxResults = 10;
+        private const int _startIndex = 1;
+        private const int _maxResults = 11;
         private const PrintType _printType = PrintType.BOOKS;
         private const Projection _projection = Projection.FULL;
         private const Sorting _orderBy = Sorting.RELEVANCE;
@@ -41,32 +42,41 @@ namespace Dort.RepositoryImpl.Test
 
             var query = _builder.BuildQueryString();
 
-            StringAssert.Contains(query, "+");
+            StringAssert.Contains("&", query);
         }
 
         [Test]
         public void ShouldSetdexZeroIfValueIsLowerThanZero()
         {
-            var query = _builder.SetStartIndex(-1);
-            Assert.AreEqual($"{Parameters.StartIndex}:0", query);
+            var query = _builder
+                .SetStartIndex(-1)
+                .BuildQueryString();
+
+            Assert.AreEqual(string.Empty, query);
         }
 
         [Test]
         public void ShouldSetMaxResults40IfValueIsGreaterThan40()
         {
-            var query = _builder.SetMaxResults(41);
-            Assert.AreEqual($"{Parameters.StartIndex}:40", query);
+            var query = _builder
+                .SetMaxResults(41)
+                .BuildQueryString();
+
+            Assert.AreEqual(string.Empty, query);
         }
 
         [Test]
         public void ShouldSetMaxResults1IfValueIsLowerThan1()
         {
-            var query = _builder.SetMaxResults(0);
-            Assert.AreEqual($"{Parameters.StartIndex}:1", query);
+            var query = _builder.
+                SetMaxResults(0)
+                .BuildQueryString();
+
+            Assert.AreEqual(string.Empty, query);
         }
 
         [Test]
-        public void ShouldAddAllParamaters()
+        public void ShouldCreateQueryOk()
         {
             _builder.SetTitle(_title)
                 .SetAuthor(_author)
@@ -81,18 +91,18 @@ namespace Dort.RepositoryImpl.Test
 
             var query = _builder.BuildQueryString();
 
-            Assert.AreEqual(10, query.Split('+').Length);
+            Assert.AreEqual(10, query.Split('&').Length);
 
             StringAssert.Contains($"{Parameters.Intitle}:{_title}", query);
             StringAssert.Contains($"{Parameters.Inauthor}:{_author}", query);
             StringAssert.Contains($"{Parameters.InPublisher}:{_publisher}", query);
             StringAssert.Contains($"{Parameters.Subject}:{_subject}", query);
             StringAssert.Contains($"{Parameters.VolumeId}:{_volumeId}", query);
-            StringAssert.Contains($"{Parameters.MaxResults}:{_maxResults}", query);
-            StringAssert.Contains($"{Parameters.Projection}:{_projection}", query);
-            StringAssert.Contains($"{Parameters.StartIndex}:{_startIndex}", query);
-            StringAssert.Contains($"{Parameters.PrintType}:{_printType}", query);
-            StringAssert.Contains($"{Parameters.OrderBy}:{_orderBy}", query);
+            StringAssert.Contains($"{Parameters.MaxResults}={_maxResults}", query);
+            StringAssert.Contains($"{Parameters.Projection}={_projection.Description()}", query);
+            StringAssert.Contains($"{Parameters.StartIndex}={_startIndex}", query);
+            StringAssert.Contains($"{Parameters.PrintType}={_printType.Description()}", query);
+            StringAssert.Contains($"{Parameters.OrderBy}={_orderBy.Description()}", query);
         }
     }
 }
