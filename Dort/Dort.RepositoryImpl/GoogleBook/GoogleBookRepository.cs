@@ -1,10 +1,12 @@
 ﻿using Dort.Entity.GoogleBook;
+using Dort.Repository.GoogleBook;
 using Dort.Repository.Http;
+using Dort.RepositoryImpl.GoogleBook;
 using System;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dort.Repository.GoogleBook
+namespace Dort.RepositoryImpl.GoogleBook
 {
     public class GoogleBookRepository : IGoogleBookRepository
     {
@@ -22,7 +24,7 @@ namespace Dort.Repository.GoogleBook
 
         public async Task<SearchReponse> FindByAuthor(string author)
         {
-            return await _http.GetAsync<SearchReponse>($"{_baseUrl}?q=inauthor:{author}");
+            return await _http.GetAsync<SearchReponse>($"{_baseUrl}?q={Parameters.Inauthor}:{author}");
         }
 
         public async Task<SearchReponse> FindByBookName(string book)
@@ -30,63 +32,19 @@ namespace Dort.Repository.GoogleBook
             return await _http.GetAsync<SearchReponse>($"{_baseUrl}?q={book}");
         }
 
-        public async Task<SearchReponse> FindByCategory(string category)
+        public async Task<SearchReponse> FindBySubject(string category)
         {
-            return await _http.GetAsync<SearchReponse>($"{_baseUrl}?q=subject:{category}");
+            return await _http.GetAsync<SearchReponse>($"{_baseUrl}?q={Parameters.Subject}:{category}");
         }
 
-        public async Task<SearchReponse> FindByFilter(QueryFilter filter)
+        public async Task<SearchReponse> FindByFilter(IGoogleApiQueryBuilder filter)
         {
-            if (filter == null)
-            {
-                return await _http.GetAsync<SearchReponse>($"{_baseUrl}");
-            }
-
-            StringBuilder builder = new StringBuilder();
-
-            if (!string.IsNullOrEmpty(filter.Author))
-            {
-                builder.Append(filter.Author);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Publisher))
-            {
-                if (!string.IsNullOrEmpty(builder.ToString()))
-                {
-                    builder.Append("+");
-                }
-
-                builder.Append($"inauthor:{filter.Author}");
-            }
-
-            if (!string.IsNullOrEmpty(filter.Publisher))
-            {
-                if (!string.IsNullOrEmpty(builder.ToString()))
-                {
-                    builder.Append("+");
-                }
-
-                builder.Append($"publisher:{filter.Publisher}");
-            }
-
-            if (!string.IsNullOrEmpty(filter.Subject))
-            {
-                if (!string.IsNullOrEmpty(builder.ToString()))
-                {
-                    builder.Append("+");
-                }
-
-                builder.Append($"subject:{filter.Subject}");
-            }
-
-            return await _http.GetAsync<SearchReponse>($"{_baseUrl}?q={builder.ToString()}");
-
-            throw new NotImplementedException();
+            return await _http.GetAsync<SearchReponse>($"{_baseUrl}?q={filter.BuildQueryString()}");
         }
 
         public async Task<SearchReponse> FindByPublisher(string publisher)
         {
-            return await _http.GetAsync<SearchReponse>($"{_baseUrl}?q=inpublisher:{publisher}");
+            return await _http.GetAsync<SearchReponse>($"{_baseUrl}?q={Parameters.InPublisher}:{publisher}");
         }
     }
 }

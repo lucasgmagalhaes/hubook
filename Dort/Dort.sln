@@ -25,6 +25,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dort.Utils", "Dort.Utils\Do
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dort.I18n", "Dort.I18n\Dort.I18n.csproj", "{9CD07880-1049-438E-A4B2-2CEEB3861FAA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{374526D7-C8B7-4A95-A429-8C16E77B1E2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dort.RepositoryImpl.Test", "Dort.RepositoryImpl.Test\Dort.RepositoryImpl.Test.csproj", "{8DAA0C93-C608-4649-9268-B8242860E5CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,9 +67,16 @@ Global
 		{9CD07880-1049-438E-A4B2-2CEEB3861FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CD07880-1049-438E-A4B2-2CEEB3861FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CD07880-1049-438E-A4B2-2CEEB3861FAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DAA0C93-C608-4649-9268-B8242860E5CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DAA0C93-C608-4649-9268-B8242860E5CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DAA0C93-C608-4649-9268-B8242860E5CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DAA0C93-C608-4649-9268-B8242860E5CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8DAA0C93-C608-4649-9268-B8242860E5CC} = {374526D7-C8B7-4A95-A429-8C16E77B1E2F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8EF40D0E-9282-4AD8-AC72-34B7686B5E72}

@@ -5,6 +5,7 @@ using Dort.Repository.Db;
 using Dort.Repository.GoogleBook;
 using Dort.Repository.Http;
 using Dort.RepositoryImpl.Database;
+using Dort.RepositoryImpl.GoogleBook;
 using Dort.RepositoryImpl.Http;
 using Dort.WebApi;
 using Dort.WebApi.Extensions;
@@ -193,6 +194,7 @@ namespace WebApi
             services.AddScoped(typeof(IGoogleBookRepository), typeof(GoogleBookRepository));
             services.AddScoped(typeof(IHttpRepository), typeof(HttpRepository));
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+            services.AddScoped(typeof(IGoogleApiQueryBuilder), typeof(GoogleApiQueryBuilder));
         }
 
         /// <summary>

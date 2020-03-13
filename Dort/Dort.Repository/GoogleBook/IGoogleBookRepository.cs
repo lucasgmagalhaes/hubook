@@ -28,8 +28,8 @@ namespace Dort.Repository.GoogleBook
         /// </summary>
         /// <param name="author"></param>
         /// <returns></returns>
-        Task<SearchReponse> FindByCategory(string category);
+        Task<SearchReponse> FindBySubject(string category);
 
-        Task<SearchReponse> FindByFilter(QueryFilter filter);
+        Task<SearchReponse> FindByFilter(IGoogleApiQueryBuilder filter);
     }
 }

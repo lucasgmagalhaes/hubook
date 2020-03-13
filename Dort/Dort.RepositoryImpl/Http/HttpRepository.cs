@@ -32,7 +32,9 @@ namespace Dort.RepositoryImpl.Http
         {
             var client = GetHttpClient();
             var response = await client.GetAsync(url);
+
             response.EnsureSuccessStatusCode();
+
             string responseString = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(responseString);
         }
