@@ -961,10 +961,10 @@
   resolved "https://registry.yarnpkg.com/@bazel/hide-bazel-files/-/hide-bazel-files-1.4.0.tgz#79ae41240075dee0454fb260cb8f83f450648189"
   integrity sha512-b2wKyLMIndYk/gwxPhd3SVyUhxc7dXH/3lfRZOrGYVCIFlR4CkaTiuEngJJ0eKOdPMAESIE6bou173X93Y5C8w==
 
-"@bazel/ibazel@0.12.2":
-  version "0.12.2"
-  resolved "https://registry.yarnpkg.com/@bazel/ibazel/-/ibazel-0.12.2.tgz#98a290dbf8025076dd3040eab4f13a3d7e99357c"
-  integrity sha512-CktVREceZn+6VokQ7A2qByuXBSGRM0THuyv68JUShHYyCkYS94nYMZEIe5NXk12CRzcpMLfZGD5Gdtr+jWs9pw==
+"@bazel/ibazel@0.12.3":
+  version "0.12.3"
+  resolved "https://registry.yarnpkg.com/@bazel/ibazel/-/ibazel-0.12.3.tgz#c8c82647f920cd529c7793c50e087e1a754a5973"
+  integrity sha512-dyx62Uo5kogrxFmqFNpGvbavfr8yjmuQlOyZczOuA60piULwlUsO7Oh3/1OUWKDSXaMMqHhFQfpdl+z0HjI6TQ==
 
 "@bazel/karma@1.4.1":
   version "1.4.1"
