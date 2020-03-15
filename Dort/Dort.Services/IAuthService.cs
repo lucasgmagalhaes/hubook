@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 
-namespace Dort.Services
+namespace Dort.Service
 {
     public interface IAuthService
     {
@@ -11,7 +12,7 @@ namespace Dort.Services
         /// <param name="email">User's email</param>
         /// <param name="password">User's password</param>
         /// <returns>x-athorization token</returns>
-        string Authenticate(string email, string password);
+        Task<string> Authenticate(string email, string password);
         /// <summary>
         /// Returns the expirations time of Auth token.
         /// </summary>

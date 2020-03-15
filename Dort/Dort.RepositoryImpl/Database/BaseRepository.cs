@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Dort.RepositoryImpl.Database
 {
@@ -20,28 +21,38 @@ namespace Dort.RepositoryImpl.Database
             _dbConnectionFactory = dbConnectionFactory;
         }
 
-        public virtual T FindById(IdType id)
+        public async Task<T> FindById(IdType id)
         {
             using IDbConnection conn = _dbConnectionFactory.Connect();
-            return conn.Get<T>(id);
+            return await conn.GetAsync<T>(id);
         }
 
-        public virtual IEnumerable<T> Find(object criteria = null)
+        public async Task<IEnumerable<T>> Find(object criteria = null)
         {
             PropertyCOntainer properties = ParseProperties(criteria);
             string sqlPairs = GetSqlPairs(properties.AllNames, " AND ");
             using IDbConnection conn = _dbConnectionFactory.Connect();
             string sql = string.Format("SELECT * FROM {0} WHERE {1}", properties.TableName, sqlPairs);
-            return conn.Query<T>(sql, properties.AllPairs, commandType: CommandType.Text);
+            return await conn.QueryAsync<T>(sql, properties.AllPairs, commandType: CommandType.Text);
         }
 
-        public virtual IList<T> FindAll()
+
+        public async Task<T> FindOne(object criteria = null)
+        {
+            PropertyCOntainer properties = ParseProperties(criteria);
+            string sqlPairs = GetSqlPairs(properties.AllNames, " AND ");
+            using IDbConnection conn = _dbConnectionFactory.Connect();
+            string sql = string.Format("SELECT * FROM {0} WHERE {1} LIMIT 1", properties.TableName, sqlPairs);
+            return await conn.QuerySingleAsync<T>(sql, properties.AllPairs, commandType: CommandType.Text);
+        }
+
+        public async Task<IEnumerable<T>> FindAll()
         {
             using IDbConnection conn = _dbConnectionFactory.Connect();
-            return conn.GetAll<T>().ToList();
+            return await conn.GetAllAsync<T>();
         }
 
-        public virtual void Delete(T entity)
+        public async Task Delete(T entity)
         {
             PropertyCOntainer container = ParseProperties(entity);
             string sqlIdPairs = GetSqlPairs(container.IdNames);
@@ -49,19 +60,19 @@ namespace Dort.RepositoryImpl.Database
             WHERE {1}
             ", container.TableName, sqlIdPairs);
             using IDbConnection conn = _dbConnectionFactory.Connect();
-            conn.Query(sql, container.IdPairs, commandType: CommandType.Text);
+            await conn.QueryAsync(sql, container.IdPairs, commandType: CommandType.Text);
         }
 
-        public virtual void DeleteAll()
+        public async Task DeleteAll()
         {
             using IDbConnection conn = _dbConnectionFactory.Connect();
-            if (!conn.DeleteAll<T>())
+            if (!(await conn.DeleteAllAsync<T>()))
             {
                 throw new Exception("Could not delete entity of type" + typeof(T));
             }
         }
 
-        public virtual T Insert(T entity)
+        public async Task<T> Insert(T entity)
         {
             using IDbConnection conn = _dbConnectionFactory.Connect();
 
@@ -72,14 +83,14 @@ namespace Dort.RepositoryImpl.Database
                 string.Join(", ", propertyContainer.ValueNames),
                 string.Join(", @", propertyContainer.ValueNames));
 
-            int id = conn.Query<int>
-                (sql, propertyContainer.ValuePairs, commandType: CommandType.Text).FirstOrDefault();
+            int id = (await conn.QueryAsync<int>
+                (sql, propertyContainer.ValuePairs, commandType: CommandType.Text)).FirstOrDefault();
 
             entity.Id = (IdType)Convert.ChangeType(id, typeof(IdType));
             return entity;
         }
 
-        public virtual void Update(T entity)
+        public async Task Update(T entity)
         {
             PropertyCOntainer propertyContainer = ParseProperties(entity);
             string sqlIdPairs = GetSqlPairs(propertyContainer.IdNames);
@@ -89,19 +100,19 @@ namespace Dort.RepositoryImpl.Database
             WHERE {2}
             ", propertyContainer.TableName, sqlValuePairs, sqlIdPairs);
             using IDbConnection conn = _dbConnectionFactory.Connect();
-            conn.Query(sql, propertyContainer.AllPairs, commandType: CommandType.Text);
+            await conn.QueryAsync(sql, propertyContainer.AllPairs, commandType: CommandType.Text);
         }
 
-        public virtual IList<T> Query(string sql, CommandType type, object parameter = null)
+        public async Task<IEnumerable<T>> Query(string sql, CommandType type, object parameter = null)
         {
             using IDbConnection conn = _dbConnectionFactory.Connect();
-            return conn.Query<T>(sql, parameter, commandType: type).ToList();
+            return await conn.QueryAsync<T>(sql, parameter, commandType: type);
         }
 
-        public virtual T QueryFirstOrDefault(string sql, object parameter = null)
+        public async Task<T> QueryFirstOrDefault(string sql, object parameter = null)
         {
             using IDbConnection conn = _dbConnectionFactory.Connect();
-            return conn.Query<T>(sql, parameter).FirstOrDefault();
+            return (await conn.QueryAsync<T>(sql, parameter)).FirstOrDefault();
         }
 
         /// <summary>

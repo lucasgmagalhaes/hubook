@@ -7,9 +7,8 @@ using Dort.Repository.Http;
 using Dort.RepositoryImpl.Database;
 using Dort.RepositoryImpl.GoogleBook;
 using Dort.RepositoryImpl.Http;
+using Dort.Service;
 using Dort.ServiceImpl;
-using Dort.Services;
-using Dort.WebApi;
 using Dort.WebApi.Extensions;
 using Dort.WebApi.Filters;
 using Dort.WebApi.Swagger;
@@ -51,8 +50,8 @@ namespace WebApi
         {
             get
             {
-                var assembly = Assembly.GetEntryAssembly();
-                var version = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+                Assembly assembly = Assembly.GetEntryAssembly();
+                AssemblyInformationalVersionAttribute version = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
 
                 return version != null
                     ? version.InformationalVersion
@@ -199,6 +198,7 @@ namespace WebApi
             services.AddScoped(typeof(IGoogleApiQueryBuilder), typeof(GoogleApiQueryBuilder));
 
             services.AddScoped(typeof(IAuthService), typeof(AuthService));
+            services.AddScoped(typeof(IUserService), typeof(UserService));
         }
 
         /// <summary>
