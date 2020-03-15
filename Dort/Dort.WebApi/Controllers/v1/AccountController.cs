@@ -1,15 +1,8 @@
-﻿using Dort.Entity;
-using Dort.Repository.Db;
+﻿using Dort.Service;
 using Dort.WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Principal;
-using WebApi.Security;
+using System.Threading.Tasks;
 
 namespace WebApi.Controllers
 {
@@ -19,24 +12,18 @@ namespace WebApi.Controllers
     [Produces("application/json")]
     public class AccountController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
 
-        public AccountController(IUserRepository userRepository)
+        public AccountController(IUserService userService)
         {
-            _userRepository = userRepository;
+            _userService = userService;
         }
 
         [HttpPost("create")]
         [AllowAnonymous]
-        public ActionResult<RequestResponse> Create(NewUserModel user)
+        public async Task<ActionResult> Create(NewUserModel user)
         {
-            _userRepository.Insert(new User()
-            {
-                Name = user.Name,
-                Email = user.Email,
-                Password = user.Password
-            });
-
+            await _userService.Create(user.Name, user.Email, user.Password);
             return Ok("User registered succesfuly");
         }
     }

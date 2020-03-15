@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Dort.Repository\Dort.Repository.csproj" />
     <ProjectReference Include="..\Dort.Services\Dort.Service.csproj" />
+    <ProjectReference Include="..\Dort.Utils\Dort.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>

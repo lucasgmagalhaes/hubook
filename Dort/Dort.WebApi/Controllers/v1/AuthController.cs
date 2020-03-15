@@ -1,8 +1,9 @@
-﻿using Dort.Services;
+﻿using Dort.Service;
 using Dort.WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Dort.WebApi.Controllers
 {
@@ -21,29 +22,22 @@ namespace Dort.WebApi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Login(LoginModel model)
+        public async Task<ActionResult> Login(LoginModel model)
         {
-            try
+            string token = await _auth.Authenticate(model.Email, model.Password);
+
+            CookieOptions option = new CookieOptions
             {
-                string token = _auth.Authenticate(model.Email, model.Password);
+                Expires = _auth.GetTokenExpirationTime(),
+                HttpOnly = true,
+                IsEssential = true,
+                Secure = true,
+                Domain = "127.0.0.1"
+            };
 
-                CookieOptions option = new CookieOptions
-                {
-                    Expires = _auth.GetTokenExpirationTime(),
-                    HttpOnly = true,
-                    IsEssential = true,
-                    Secure = true,
-                    Domain = "localhost"
-                };
+            Response.Cookies.Append("SessionId", token, option);
 
-                Response.Cookies.Append("SessionId", token, option);
-
-                return Ok(new RequestResponse() { Content = "Sucess" });
-            }
-            catch
-            {
-                return BadRequest("Invalid Email or password");
-            }
+            return Ok("Sucess");
         }
     }
 }
