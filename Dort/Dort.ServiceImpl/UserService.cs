@@ -4,6 +4,7 @@ using Dort.Service;
 using Dort.Utils;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Dort.ServiceImpl
@@ -19,26 +20,41 @@ namespace Dort.ServiceImpl
             _passwordKey = configs.GetSection("passwordKey").Value;
         }
 
-        public async Task<User> Create(User user)
+        public async Task<User> Create(string name, string email, string password)
         {
-            user.Password = Cryptography.Encrypt(user.Password, _passwordKey);
-            var registredUser = await _userRepository.FindOne(new { user.Email, user.IsActive });
+            try
+            {
+                var registredUser = await _userRepository.FindOne(new { email, isActive = true });
 
-            if (registredUser != null)
+                User user = new User
+                {
+                    Password = Cryptography.Encrypt(password, _passwordKey),
+                    Name = name,
+                    IsActive = true,
+                    Level = 1
+                };
+
+                return await _userRepository.Insert(user);
+            }
+            catch (Exception e)
+            {
+                Debug.Print(e.Message);
                 throw new Exception("This email is already in use, please inform another one");
-
-            return await _userRepository.Insert(user);
+            }
         }
 
         public async Task<User> FindByEmailAndPassword(string email, string password)
         {
-            string cryptPassword = Cryptography.Encrypt(password, _passwordKey);
-            var user = await _userRepository.FindOne(new { email, password = cryptPassword });
-            
-            if (user == null)
+            try
+            {
+                string cryptPassword = Cryptography.Encrypt(password, _passwordKey);
+                return await _userRepository.FindOne(new { email, password = cryptPassword });
+            }
+            catch (Exception e)
+            {
+                Debug.Print(e.Message);
                 throw new Exception("Inválid email/password");
-
-            return user;
+            }
         }
     }
 }

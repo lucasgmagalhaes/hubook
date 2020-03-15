@@ -36,7 +36,9 @@ namespace Dort.RepositoryImpl.Database
             return await conn.QueryAsync<T>(sql, properties.AllPairs, commandType: CommandType.Text);
         }
 
-
+        /// <exception cref="Exception">When there is no elements in list</exception>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
         public async Task<T> FindOne(object criteria = null)
         {
             PropertyCOntainer properties = ParseProperties(criteria);

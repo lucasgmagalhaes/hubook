@@ -1,6 +1,5 @@
-﻿using Dort.Repository.Db;
+﻿using Dort.Entity;
 using Dort.Service;
-using Dort.Utils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -13,15 +12,13 @@ namespace Dort.ServiceImpl
 {
     public class AuthService : IAuthService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
         private readonly byte[] _loginTokenKey;
-        private readonly string _passordTokenKey;
 
-        public AuthService(IUserRepository userRepository, IConfiguration config)
+        public AuthService(IUserService userService, IConfiguration config)
         {
-            _userRepository = userRepository;
+            _userService = userService;
             _loginTokenKey = Encoding.ASCII.GetBytes(config.GetSection("loginTokenKey").Value);
-            _passordTokenKey = config.GetSection("passwordKey").Value;
         }
 
         public DateTime GetTokenExpirationTime()
@@ -31,31 +28,23 @@ namespace Dort.ServiceImpl
 
         public async Task<string> Authenticate(string email, string password)
         {
-            try
+            User user = await _userService.FindByEmailAndPassword(email, password);
+
+            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+
+            SecurityToken securityToken = handler.CreateToken(new SecurityTokenDescriptor
             {
-                var passEncrypted = Cryptography.Encrypt(password, _passordTokenKey);
-                Entity.User user = await _userRepository.FindOne(new { email, password = passEncrypted });
-
-                JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-
-                SecurityToken securityToken = handler.CreateToken(new SecurityTokenDescriptor
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(_loginTokenKey), SecurityAlgorithms.HmacSha256Signature),
+                Subject = new ClaimsIdentity(new Claim[]
                 {
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(_loginTokenKey), SecurityAlgorithms.HmacSha256Signature),
-                    Subject = new ClaimsIdentity(new Claim[]
-                    {
                         new Claim(ClaimTypes.Sid, user.Id.ToString()),
                         new Claim(ClaimTypes.Name, user.Email.ToString())
-                    }),
-                    NotBefore = DateTime.Now,
-                    Expires = GetTokenExpirationTime()
-                });
+                }),
+                NotBefore = DateTime.Now,
+                Expires = GetTokenExpirationTime()
+            });
 
-                return handler.WriteToken(securityToken);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return handler.WriteToken(securityToken);
         }
     }
 }
