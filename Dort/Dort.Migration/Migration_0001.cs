@@ -3,12 +3,12 @@
 namespace Dort.Migrations
 {
     [Migration(202002290001)]
-    public class AddUserBookAndUserLevelTable_0001 : Migration
+    public class migration_0001 : Migration
     {
         public override void Up()
         {
             Execute.Sql(@"
-                CREATE TABLE IF NOT EXISTS UserApp (
+                CREATE TABLE IF NOT EXISTS userapp (
                 Id SERIAL PRIMARY KEY NOT NULL,
                 Name VARCHAR(120) NOT NULL,
                 Email VARCHAR(120) NOT NULL,
@@ -18,7 +18,7 @@ namespace Dort.Migrations
                 Level INT NOT NULL,
                 Exp SERIAL NOT NULL,
                 LevelMaxExp SERIAL NOT NULL,
-                ProfileImgUrl VARCHAR(200) NOT NULL
+                ProfileImgUrl VARCHAR(200) NOT
                 );
 
                 CREATE TABLE IF NOT EXISTS UserBook (

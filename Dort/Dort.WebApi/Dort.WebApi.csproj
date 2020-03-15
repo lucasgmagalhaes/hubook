@@ -42,6 +42,8 @@
     <ProjectReference Include="..\Dort.I18n\Dort.I18n.csproj" />
     <ProjectReference Include="..\Dort.Migration\Dort.Migrations.csproj" />
     <ProjectReference Include="..\Dort.RepositoryImpl\Dort.RepositoryImpl.csproj" />
+    <ProjectReference Include="..\Dort.ServiceImpl\Dort.ServiceImpl.csproj" />
+    <ProjectReference Include="..\Dort.Services\Dort.Service.csproj" />
   </ItemGroup>
 
 </Project>

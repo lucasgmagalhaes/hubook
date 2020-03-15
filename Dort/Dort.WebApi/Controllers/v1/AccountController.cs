@@ -26,9 +26,9 @@ namespace WebApi.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpPost("register")]
+        [HttpPost("create")]
         [AllowAnonymous]
-        public ActionResult<RequestResponse> Register(UserModel user)
+        public ActionResult<RequestResponse> Create(NewUserModel user)
         {
             _userRepository.Insert(new User()
             {
@@ -37,59 +37,7 @@ namespace WebApi.Controllers
                 Password = user.Password
             });
 
-            return Login(user);
-        }
-
-        [HttpPost("auth")]
-        [AllowAnonymous]
-        public ActionResult<RequestResponse> Login(UserModel user)
-        {
-            var appUser = _userRepository.FindByEmailndPassword(user.Email, user.Password);
-
-            if(appUser == null)
-            {
-                BadRequest("Email or Password invalid");
-            }
-
-            ClaimsIdentity identity = new ClaimsIdentity(
-                     new GenericIdentity(appUser.Name, "Login"),
-                     new[] 
-                     {
-                        new Claim(JwtRegisteredClaimNames.Jti, appUser.Id.ToString()),
-                        new Claim(JwtRegisteredClaimNames.UniqueName, user.Name)
-                     }
-                 );
-
-            DateTime dataCriacao = DateTime.Now;
-            DateTime dataExpiracao = DateTime.Now.AddYears(1);
-
-            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-            SigningConfigurations signingConfigurations = new SigningConfigurations();
-
-            SecurityToken securityToken = handler.CreateToken(new SecurityTokenDescriptor
-            {
-                Issuer = "",
-                Audience = "",
-                SigningCredentials = signingConfigurations.SigningCredentials,
-                Subject = identity,
-                NotBefore = dataCriacao,
-                Expires = dataExpiracao
-            });
-
-            string token = handler.WriteToken(securityToken);
-
-            CookieOptions option = new CookieOptions
-            {
-                Expires = DateTime.Now.AddYears(1),
-                HttpOnly = true,
-                IsEssential = true,
-                Secure = true,
-                Domain = "localhost"
-            };
-
-            Response.Cookies.Append("SessionId", token, option);
-
-            return Ok(new RequestResponse() { Content = "Sucess" });
+            return Ok("User registered succesfuly");
         }
     }
 }

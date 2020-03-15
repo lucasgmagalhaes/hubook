@@ -17,6 +17,7 @@ namespace Dort.WebApi.Controllers
         public BookController(IGoogleBookRepository googleBookRepository, IGoogleApiQueryBuilder queryBuilder)
         {
             _bookRepository = googleBookRepository;
+            _queryBuilder = queryBuilder;
         }
 
         [HttpGet]

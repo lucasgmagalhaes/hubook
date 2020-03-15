@@ -7,6 +7,8 @@ using Dort.Repository.Http;
 using Dort.RepositoryImpl.Database;
 using Dort.RepositoryImpl.GoogleBook;
 using Dort.RepositoryImpl.Http;
+using Dort.ServiceImpl;
+using Dort.Services;
 using Dort.WebApi;
 using Dort.WebApi.Extensions;
 using Dort.WebApi.Filters;
@@ -195,6 +197,8 @@ namespace WebApi
             services.AddScoped(typeof(IHttpRepository), typeof(HttpRepository));
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
             services.AddScoped(typeof(IGoogleApiQueryBuilder), typeof(GoogleApiQueryBuilder));
+
+            services.AddScoped(typeof(IAuthService), typeof(AuthService));
         }
 
         /// <summary>
@@ -255,7 +259,7 @@ namespace WebApi
                 .ConfigureRunner(rb => rb
                     .AddPostgres()
                     .WithGlobalConnectionString(dbConection)
-                    .ScanIn(typeof(AddUserBookAndUserLevelTable_0001).Assembly).For.Migrations())
+                    .ScanIn(typeof(migration_0001).Assembly).For.Migrations())
                 .AddLogging(lb => lb.AddFluentMigratorConsole())
                 .BuildServiceProvider(false);
         }

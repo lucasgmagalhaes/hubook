@@ -1,5 +1,6 @@
 ﻿using Dort.Entity;
 using Dort.Repository.Db;
+using Dort.RepositoryImpl.Exceptions;
 using Dort.Utils;
 using Microsoft.Extensions.Configuration;
 using Repository;
@@ -16,9 +17,12 @@ namespace Dort.RepositoryImpl.Database
 
         public User FindByEmailndPassword(string email, string password)
         {
-            string passEncrypted = Cryptography.Encrypt(password, passwordKey);
-
-            return base.QueryFirstOrDefault("SELECT * FROM user_app WHERE email = @email and password = @password", new { email, password = passEncrypted });
+            var user = base.QueryFirstOrDefault("SELECT * FROM user_app WHERE email = @email and password = @password", new { email, password });
+            
+            if (user == null)
+                throw new EntityNotFoundException($"User not found");
+            
+            return user;
         }
 
         public override User Insert(User user)
