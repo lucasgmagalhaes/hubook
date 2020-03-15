@@ -4,6 +4,7 @@ using Dort.RepositoryImpl.Exceptions;
 using Dort.Utils;
 using Microsoft.Extensions.Configuration;
 using Repository;
+using System.Linq;
 
 namespace Dort.RepositoryImpl.Database
 {
@@ -17,7 +18,7 @@ namespace Dort.RepositoryImpl.Database
 
         public User FindByEmailndPassword(string email, string password)
         {
-            var user = base.QueryFirstOrDefault("SELECT * FROM user_app WHERE email = @email and password = @password", new { email, password });
+            var user = base.Find(new { email, password }).FirstOrDefault();
             
             if (user == null)
                 throw new EntityNotFoundException($"User not found");

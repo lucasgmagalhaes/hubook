@@ -20,10 +20,20 @@ namespace Dort.RepositoryImpl.Database
             _dbConnectionFactory = dbConnectionFactory;
         }
 
-        public virtual T Find(object id)
+        public virtual T FindById(object id)
         {
             using IDbConnection conn = _dbConnectionFactory.Connect();
             return conn.Get<T>(id);
+        }
+
+        public virtual IEnumerable<T> Find(object criteria = null)
+        {
+            var properties = ParseProperties(criteria);
+            var sqlPairs = GetSqlPairs(properties.AllNames, " AND ");
+
+            using IDbConnection conn = _dbConnectionFactory.Connect();
+            var sql = string.Format("SELECT * FROM [{0}] WHERE {1}", typeof(T).Name, sqlPairs);
+            return conn.Query<T>(sql);
         }
 
         public virtual IList<T> FindAll()
@@ -89,12 +99,21 @@ namespace Dort.RepositoryImpl.Database
             return conn.Query<T>(sql, parameter).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Create a commaseparated list of value pairs on 
+        /// the form: "key1=@value1, key2=@value2, ..."
+        /// </summary>
+        private static string GetSqlPairs(IEnumerable<string> keys, string separator = ", ")
+        {
+            var pairs = keys.Select(key => string.Format("{0}=@{0}", key)).ToList();
+            return string.Join(separator, pairs);
+        }
 
         /// <summary>
         /// Retrieves a Dictionary with name and value 
         /// for all object properties matching the given criteria.
         /// </summary>
-        private PropertyCOntainer ParseProperties(T obj)
+        private PropertyCOntainer ParseProperties(object obj)
         {
             var propertyContainer = new PropertyCOntainer();
 
