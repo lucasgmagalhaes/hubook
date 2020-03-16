@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -172,6 +173,14 @@ namespace WebApi
         private void AddSwaggerInAppBuilder(IApplicationBuilder app, IApiVersionDescriptionProvider provider)
         {
             app.UseSwagger();
+            
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles")),
+                RequestPath = "/StaticFiles"
+            });
+
             app.UseSwaggerUI(options =>
             {
                 foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
@@ -187,7 +196,7 @@ namespace WebApi
         }
 
         /// <summary>
-        /// Add all scped services
+        /// Add all scoped services
         /// </summary>
         /// <param name="services"></param>
         private void AddScopedServices(IServiceCollection services)
@@ -199,6 +208,7 @@ namespace WebApi
 
             services.AddScoped(typeof(IAuthService), typeof(AuthService));
             services.AddScoped(typeof(IUserService), typeof(UserService));
+            services.AddScoped(typeof(IMailService), typeof(MailService));
         }
 
         /// <summary>

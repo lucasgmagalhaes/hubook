@@ -60,7 +60,7 @@
         </member>
         <member name="M:WebApi.Startup.AddScopedServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Add all scped services
+            Add all scoped services
             </summary>
             <param name="services"></param>
         </member>

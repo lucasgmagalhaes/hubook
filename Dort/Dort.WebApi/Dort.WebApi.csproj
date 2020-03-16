@@ -19,6 +19,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="StaticFiles\SubscriptionConfirmTemplate.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="StaticFiles\SubscriptionConfirmTemplate.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
