@@ -2,6 +2,7 @@
 using Dort.WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace WebApi.Controllers
@@ -25,6 +26,14 @@ namespace WebApi.Controllers
         {
             await _userService.Create(user.Name, user.Email, user.Password);
             return Ok("User registered succesfuly");
+        }
+
+        [Authorize]
+        [HttpPost("update")]
+        public async Task<ActionResult> UpdateProfile(UpdateUserProfileModel model)
+        {
+            await _userService.UpdateProfile(model.Name, model.Password, model.ProfileImgUrl);
+            return Ok("Profile updated");
         }
     }
 }

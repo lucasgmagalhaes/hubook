@@ -73,6 +73,7 @@ namespace WebApi
             services.AddControllers(options => options.Filters.Add(new HttpResponseExceptionFilter()));
             services.AddCors();
             services.AddLogging();
+            services.AddHttpContextAccessor();
 
             ConfigureApiVersioning(services);
 

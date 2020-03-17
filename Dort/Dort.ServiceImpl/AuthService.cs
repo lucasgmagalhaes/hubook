@@ -38,7 +38,7 @@ namespace Dort.ServiceImpl
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                         new Claim(ClaimTypes.Sid, user.Id.ToString()),
-                        new Claim(ClaimTypes.Name, user.Email.ToString())
+                        new Claim(ClaimTypes.Name, user.Name.ToString())
                 }),
                 NotBefore = DateTime.Now,
                 Expires = GetTokenExpirationTime()
