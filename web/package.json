@@ -31,7 +31,7 @@
     "@angular/bazel": "~9.0.1",
     "@angular/cli": "~9.0.6",
     "@angular/compiler-cli": "~9.0.4",
-    "@angular/language-service": "~9.0.6",
+    "@angular/language-service": "~9.0.7",
     "@bazel/bazel": "2.1.0",
     "@bazel/ibazel": "0.12.3",
     "@bazel/karma": "1.4.1",
