@@ -22,8 +22,9 @@ namespace Dort.ServiceImpl
         private readonly IHttpContextAccessor _httpAcessor;
         private readonly string _passwordKey;
 
-        public UserService(IUserRepository userRepository, 
-            IConfiguration configs, 
+        public UserService(IUserRepository userRepository,
+            IConfiguration configs,
+            IHttpContextAccessor httpAcessor,
             IMailService mailService)
         {
             _userRepository = userRepository;

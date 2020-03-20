@@ -1,5 +1,6 @@
 ﻿using Dort.Entity;
 using Dort.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -13,11 +14,15 @@ namespace Dort.ServiceImpl
     public class AuthService : IAuthService
     {
         private readonly IUserService _userService;
+        private readonly IHttpContextAccessor _httpAcessor;
         private readonly byte[] _loginTokenKey;
-
-        public AuthService(IUserService userService, IConfiguration config)
+       
+        public AuthService(IUserService userService, 
+            IConfiguration config,
+            IHttpContextAccessor httpAcessor)
         {
             _userService = userService;
+            _httpAcessor = httpAcessor;
             _loginTokenKey = Encoding.ASCII.GetBytes(config.GetSection("loginTokenKey").Value);
         }
 
@@ -26,7 +31,7 @@ namespace Dort.ServiceImpl
             return DateTime.Now.AddYears(1);
         }
 
-        public async Task<string> Authenticate(string email, string password)
+        public async Task Authenticate(string email, string password)
         {
             User user = await _userService.FindByEmailAndPassword(email, password);
 
@@ -44,7 +49,17 @@ namespace Dort.ServiceImpl
                 Expires = GetTokenExpirationTime()
             });
 
-            return handler.WriteToken(securityToken);
+            CookieOptions option = new CookieOptions
+            {
+                Expires = GetTokenExpirationTime(),
+                HttpOnly = true,
+                IsEssential = true,
+                Secure = true,
+                Domain = "127.0.0.1"
+            };
+
+            var token = handler.WriteToken(securityToken);
+            _httpAcessor.HttpContext.Response.Cookies.Append("SessionId", token, option);
         }
     }
 }

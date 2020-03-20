@@ -24,19 +24,7 @@ namespace Dort.WebApi.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Login(LoginModel model)
         {
-            string token = await _auth.Authenticate(model.Email, model.Password);
-
-            CookieOptions option = new CookieOptions
-            {
-                Expires = _auth.GetTokenExpirationTime(),
-                HttpOnly = true,
-                IsEssential = true,
-                Secure = true,
-                Domain = "127.0.0.1"
-            };
-
-            Response.Cookies.Append("SessionId", token, option);
-
+            await _auth.Authenticate(model.Email, model.Password);
             return Ok("Sucess");
         }
     }

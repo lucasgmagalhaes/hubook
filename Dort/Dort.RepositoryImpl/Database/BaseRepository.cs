@@ -29,7 +29,7 @@ namespace Dort.RepositoryImpl.Database
 
         public async Task<IEnumerable<T>> Find(object criteria = null)
         {
-            PropertyCOntainer properties = ParseProperties(criteria);
+            PropertyContainer properties = ParseProperties(criteria);
             string sqlPairs = GetSqlPairs(properties.AllNames, " AND ");
             using IDbConnection conn = _dbConnectionFactory.Connect();
             string sql = string.Format("SELECT * FROM {0} WHERE {1}", properties.TableName, sqlPairs);
@@ -41,7 +41,7 @@ namespace Dort.RepositoryImpl.Database
         /// <returns></returns>
         public async Task<T> FindOne(object criteria = null)
         {
-            PropertyCOntainer properties = ParseProperties(criteria);
+            PropertyContainer properties = ParseProperties(criteria);
             string sqlPairs = GetSqlPairs(properties.AllNames, " AND ");
             using IDbConnection conn = _dbConnectionFactory.Connect();
             string sql = string.Format("SELECT * FROM {0} WHERE {1} LIMIT 1", properties.TableName, sqlPairs);
@@ -56,7 +56,7 @@ namespace Dort.RepositoryImpl.Database
 
         public async Task Delete(T entity)
         {
-            PropertyCOntainer container = ParseProperties(entity);
+            PropertyContainer container = ParseProperties(entity);
             string sqlIdPairs = GetSqlPairs(container.IdNames);
             string sql = string.Format(@"DELETE FROM {0} 
             WHERE {1}
@@ -78,7 +78,7 @@ namespace Dort.RepositoryImpl.Database
         {
             using IDbConnection conn = _dbConnectionFactory.Connect();
 
-            PropertyCOntainer propertyContainer = ParseProperties(entity);
+            PropertyContainer propertyContainer = ParseProperties(entity);
             string sql = string.Format(@"INSERT INTO {0} ({1}) 
             VALUES(@{2}) RETURNING id",
                 propertyContainer.TableName,
@@ -94,7 +94,7 @@ namespace Dort.RepositoryImpl.Database
 
         public async Task Update(T entity)
         {
-            PropertyCOntainer propertyContainer = ParseProperties(entity);
+            PropertyContainer propertyContainer = ParseProperties(entity);
             string sqlIdPairs = GetSqlPairs(propertyContainer.IdNames);
             string sqlValuePairs = GetSqlPairs(propertyContainer.ValueNames);
             string sql = string.Format(@"UPDATE {0} 
@@ -131,9 +131,9 @@ namespace Dort.RepositoryImpl.Database
         /// Retrieves a Dictionary with name and value 
         /// for all object properties matching the given criteria.
         /// </summary>
-        private PropertyCOntainer ParseProperties(object obj)
+        private PropertyContainer ParseProperties(object obj)
         {
-            PropertyCOntainer propertyContainer = new PropertyCOntainer();
+            PropertyContainer propertyContainer = new PropertyContainer();
 
             string typeName = (typeof(T).GetCustomAttributes(typeof(DapperTableAttribute), true).FirstOrDefault() as DapperTableAttribute).Name ?? typeof(T).Name;
             propertyContainer.TableName = typeName;

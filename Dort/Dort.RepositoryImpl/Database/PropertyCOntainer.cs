@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Dort.RepositoryImpl.Database
 {
-    internal class PropertyCOntainer
+    internal class PropertyContainer
     {
         private readonly Dictionary<string, object> _ids;
         private readonly Dictionary<string, object> _values;
@@ -22,7 +22,7 @@ namespace Dort.RepositoryImpl.Database
 
         internal IEnumerable<KeyValuePair<string, object>> AllPairs => _ids.Concat(_values);
 
-        internal PropertyCOntainer()
+        internal PropertyContainer()
         {
             _ids = new Dictionary<string, object>();
             _values = new Dictionary<string, object>();

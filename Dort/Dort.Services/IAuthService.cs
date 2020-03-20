@@ -12,7 +12,7 @@ namespace Dort.Service
         /// <param name="email">User's email</param>
         /// <param name="password">User's password</param>
         /// <returns>x-athorization token</returns>
-        Task<string> Authenticate(string email, string password);
+        Task Authenticate(string email, string password);
         /// <summary>
         /// Returns the expirations time of Auth token.
         /// </summary>

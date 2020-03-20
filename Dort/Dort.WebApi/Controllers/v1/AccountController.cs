@@ -2,7 +2,6 @@
 using Dort.WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace WebApi.Controllers
@@ -14,9 +13,11 @@ namespace WebApi.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IAuthService _auth;
 
-        public AccountController(IUserService userService)
+        public AccountController(IUserService userService, IAuthService auth)
         {
+            _auth = auth;
             _userService = userService;
         }
 
@@ -25,6 +26,7 @@ namespace WebApi.Controllers
         public async Task<ActionResult> Create(NewUserModel user)
         {
             await _userService.Create(user.Name, user.Email, user.Password);
+            await _auth.Authenticate(user.Email, user.Password);
             return Ok("User registered succesfuly");
         }
 
