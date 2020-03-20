@@ -6,13 +6,19 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
-import { HeaderComponent } from './core/components/header/header.component';
-import { FooterComponent } from './core/components/footer/footer.component';
-import { RouterModule } from '@angular/router';
-import { ROUTES } from './app.routing';
+import { HeaderComponent } from "./core/components/header/header.component";
+import { FooterComponent } from "./core/components/footer/footer.component";
+import { RouterModule } from "@angular/router";
+import { ROUTES } from "./app.routing";
+import { PresentationComponent } from "./presentation/presentation.component";
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    PresentationComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

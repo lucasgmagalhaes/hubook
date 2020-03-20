@@ -1,9 +1,23 @@
 import { Routes } from "@angular/router";
-import routes from "./routes";
+import { PresentationComponent } from "./presentation/presentation.component";
 
 export const ROUTES: Routes = [
   {
-    path: '',
-    loadChildren: () => import("./account/account.module").then(m => m.AccountModule),
+    path: "",
+    component: PresentationComponent
+  },
+  {
+    path: "login",
+    loadChildren: () => import("./login/login.module").then(m => m.LoginModule)
+  },
+  {
+    path: "register",
+    loadChildren: () =>
+      import("./register/register.module").then(m => m.RegisterModule)
+  },
+  {
+    path: "browse",
+    loadChildren: () =>
+      import("./browse/browse.module").then(m => m.BrowseModule)
   }
 ];

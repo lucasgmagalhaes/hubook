@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import routes from "../../routes";
+import routes from '../routes';
+import { Router } from '@angular/router';
 
 @Component({
   selector: "hb-login",
@@ -10,9 +11,11 @@ export class LoginComponent implements OnInit {
   get register() {
     return `/${routes.register}`;
   }
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
-  login() {}
+  login() {
+    this.router.navigate(["browse"]);
+  }
 }
