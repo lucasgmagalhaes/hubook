@@ -5,6 +5,7 @@ import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { HeaderComponent } from "./components/header/header.component";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
+import { MatSidenavModule } from "@angular/material/sidenav";
 
 const ROUTES: Routes = [
   {
@@ -15,6 +16,11 @@ const ROUTES: Routes = [
 
 @NgModule({
   declarations: [BrowseComponent, HeaderComponent, SidebarComponent],
-  imports: [MatToolbarModule, MatButtonModule, RouterModule.forChild(ROUTES)]
+  imports: [
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    RouterModule.forChild(ROUTES)
+  ]
 })
 export class BrowseModule {}
