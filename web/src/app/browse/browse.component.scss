@@ -1,13 +1,11 @@
 .container {
-  flex: 1;
-}
-.example-sidenav-content {
-  display: flex;
   height: 100%;
-  align-items: center;
-  justify-content: center;
+  padding-top: 50px;
 }
 
-.example-sidenav {
-  padding: 20px;
+header {
+  height: 40px;
+  width: 100%;
+  background: blue;
+  position: fixed;
 }

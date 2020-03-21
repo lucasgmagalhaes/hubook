@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import routes from "../routes";
 
 @Component({
@@ -6,12 +6,20 @@ import routes from "../routes";
   templateUrl: "./register.component.html",
   styleUrls: ["./register.component.scss"]
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   get login() {
     return `/${routes.login}`;
   }
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const body = document.getElementsByTagName("body")[0];
+    body.classList.add("account-background");
+  }
+
+  ngOnDestroy(): void {
+    const body = document.getElementsByTagName("body")[0];
+    body.classList.remove("account-background");
+  }
 }
