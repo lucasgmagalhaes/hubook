@@ -1,5 +1,14 @@
 <mat-toolbar color="primary">
-  <div class="header-container"></div>
+  <div class="header-container start">
+    <button
+      (click)="emitBarTogled()"
+      class="icon-header"
+      mat-icon-button
+      aria-label="Example icon-button with a heart icon"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
   <div class="header-container center">
     <div class="input-container">
       <mat-icon aria-hidden="false" aria-label="Example home icon"
@@ -11,7 +20,8 @@
 
   <div class="header-container">
     <div class="end">
-      <button class="icon-header"
+      <button
+        class="icon-header"
         mat-icon-button
         aria-label="Example icon-button with a heart icon"
       >

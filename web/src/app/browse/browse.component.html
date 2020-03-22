@@ -1,20 +1,47 @@
-<hb-browse-header></hb-browse-header>
+<hb-browse-header (barToggled)="drawer.toggle()"></hb-browse-header>
 
 <body>
   <div class="container">
     <mat-drawer-container>
-      <mat-drawer #drawer class="example-sidenav" mode="side">
-        <p>Auto-resizing sidenav</p>
-        <p *ngIf="showFiller"> orem, ipsum dolor sit amet consectetur.</p>
-        <button (click)="showFiller = !showFiller" mat-raised-button>
-          Toggle extra text
-        </button>
+      <mat-drawer #drawer class="sidebar" mode="side">
+        <div class="options">
+          <button mat-button>
+            <mat-icon>home</mat-icon>
+            Home
+          </button>
+          <button mat-button>
+            <mat-icon>whatshot</mat-icon>
+            Hots
+          </button>
+          <button mat-button>
+            <mat-icon>library_books</mat-icon>
+            My books
+          </button>
+          <button mat-button>
+            <mat-icon>import_export</mat-icon>
+            My Trades
+          </button>
+          <div class="spliter"></div>
+          <button mat-button>Suspence</button>
+          <button mat-button>Action</button>
+          <button mat-button>Horror</button>
+          <button mat-button>Commedy</button>
+        </div>
       </mat-drawer>
 
-      <div class="example-sidenav-content">
-        <button type="button" mat-button (click)="drawer.toggle()">
-          Toggle sidenav
-        </button>
+      <div class="content">
+        <div class="books">
+          <hb-book-card></hb-book-card>
+          <hb-book-card></hb-book-card>
+          <hb-book-card></hb-book-card>
+          <hb-book-card></hb-book-card>
+          <hb-book-card></hb-book-card>
+          <hb-book-card></hb-book-card>
+          <hb-book-card></hb-book-card>
+          <hb-book-card></hb-book-card>
+          <hb-book-card></hb-book-card>
+          <hb-book-card></hb-book-card>
+        </div>
       </div>
     </mat-drawer-container>
   </div>

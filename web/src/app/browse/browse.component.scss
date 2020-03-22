@@ -13,3 +13,45 @@ header {
 mat-drawer-container {
   height: 100%;
 }
+
+.sidebar {
+  width: 248px;
+}
+
+.options button {
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  padding-left: 27px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.options mat-icon {
+  padding-right: 15px;
+  padding-bottom: 3px;
+}
+
+.spliter {
+  width: 100%;
+  height: 1px;
+  margin: 5px 0px;
+  background-color: #e4e4e4;
+}
+
+.content {
+  display: flex;
+  padding: 0px 16px;
+  flex-direction: row;
+  margin-top: 50px;
+}
+
+.books {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+}
