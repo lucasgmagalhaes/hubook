@@ -1,7 +1,21 @@
-<header></header>
+<hb-browse-header></hb-browse-header>
 
 <body>
   <div class="container">
-    <span>tesads</span>
+    <mat-drawer-container>
+      <mat-drawer #drawer class="example-sidenav" mode="side">
+        <p>Auto-resizing sidenav</p>
+        <p *ngIf="showFiller"> orem, ipsum dolor sit amet consectetur.</p>
+        <button (click)="showFiller = !showFiller" mat-raised-button>
+          Toggle extra text
+        </button>
+      </mat-drawer>
+
+      <div class="example-sidenav-content">
+        <button type="button" mat-button (click)="drawer.toggle()">
+          Toggle sidenav
+        </button>
+      </div>
+    </mat-drawer-container>
   </div>
 </body>

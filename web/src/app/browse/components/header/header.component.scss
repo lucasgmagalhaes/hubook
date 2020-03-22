@@ -1,3 +1,71 @@
 mat-toolbar {
   position: fixed;
+  display: flex;
+  height: 56px;
+}
+
+.searchInput {
+  height: 30px;
+}
+
+input {
+  padding: 12px;
+  padding-left: 46px;
+  font-size: 16px;
+  border-radius: 22px;
+  width: 100%;
+  border: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+input:focus {
+  outline: none;
+}
+
+.input-container mat-icon {
+  position: absolute;
+  color: grey;
+  text-align: center;
+  padding: 9px;
+  cursor: context-menu;
+}
+
+.header-container {
+  width: 33%;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.end {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.input-container {
+  width: 100%;
+  text-align: center;
+  justify-content: flex-start;
+  display: flex;
+}
+
+.end-menu {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user {
+  border-radius: 50%;
+  padding: 3px 9px;
+  background: #868686;
+  border: 1px solid white;
+  cursor: pointer;
+}
+
+.icon-header {
+  padding: 0px 10px;
 }

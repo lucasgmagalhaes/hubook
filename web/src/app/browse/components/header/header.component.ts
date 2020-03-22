@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'hb-header',
+  selector: 'hb-browse-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })

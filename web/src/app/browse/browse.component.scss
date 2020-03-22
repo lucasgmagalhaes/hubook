@@ -1,6 +1,6 @@
 .container {
   height: 100%;
-  padding-top: 50px;
+  padding-top: 56px;
 }
 
 header {
@@ -8,4 +8,8 @@ header {
   width: 100%;
   background: blue;
   position: fixed;
+}
+
+mat-drawer-container {
+  height: 100%;
 }

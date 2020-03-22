@@ -6,6 +6,10 @@ import { HeaderComponent } from "./components/header/header.component";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatInputModule } from "@angular/material/input";
+import { MatIconModule } from "@angular/material/icon";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatBadgeModule } from "@angular/material/badge";
 
 const ROUTES: Routes = [
   {
@@ -19,7 +23,11 @@ const ROUTES: Routes = [
   imports: [
     MatToolbarModule,
     MatButtonModule,
+    MatInputModule,
     MatSidenavModule,
+    MatIconModule,
+    MatMenuModule,
+    MatBadgeModule,
     RouterModule.forChild(ROUTES)
   ]
 })
