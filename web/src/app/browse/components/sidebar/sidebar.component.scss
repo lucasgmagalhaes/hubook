@@ -1,16 +1,25 @@
-.example-container {
-  width: 500px;
-  height: 300px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+.options {
+  padding-top: 10px;
 }
 
-.example-sidenav-content {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
+.options button {
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  padding-left: 27px;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 
-.example-sidenav {
-  padding: 20px;
+.options mat-icon {
+  padding-right: 15px;
+  padding-bottom: 3px;
+}
+
+.spliter {
+  width: 100%;
+  height: 1px;
+  margin: 5px 0px;
+  background-color: #e4e4e4;
 }

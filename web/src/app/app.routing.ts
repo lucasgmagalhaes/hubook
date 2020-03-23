@@ -19,5 +19,11 @@ export const ROUTES: Routes = [
     path: "browse",
     loadChildren: () =>
       import("./browse/browse.module").then(m => m.BrowseModule)
+  },
+  {
+    path: "profile",
+    outlet: "browse-content",
+    loadChildren: () =>
+      import("./profile/profile.module").then(m => m.ProfileModule)
   }
 ];

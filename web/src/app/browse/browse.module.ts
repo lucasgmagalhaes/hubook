@@ -10,17 +10,27 @@ import { MatInputModule } from "@angular/material/input";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatBadgeModule } from "@angular/material/badge";
-import { BookCardComponent } from './components/book-card/book-card.component';
+import { BookCardComponent } from "./components/book-card/book-card.component";
 
 const ROUTES: Routes = [
   {
     path: "",
     component: BrowseComponent
+  },
+  {
+    path: "profile",
+    loadChildren: () =>
+      import("../profile/profile.module").then(m => m.ProfileModule)
   }
 ];
 
 @NgModule({
-  declarations: [BrowseComponent, HeaderComponent, SidebarComponent, BookCardComponent],
+  declarations: [
+    BrowseComponent,
+    HeaderComponent,
+    SidebarComponent,
+    BookCardComponent
+  ],
   imports: [
     MatToolbarModule,
     MatButtonModule,
