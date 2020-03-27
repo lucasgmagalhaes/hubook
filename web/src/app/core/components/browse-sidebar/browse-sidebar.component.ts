@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 
 @Component({
-  selector: "hb-sidebar",
-  templateUrl: "./sidebar.component.html",
-  styleUrls: ["./sidebar.component.scss"]
+  selector: "hb-browse-sidebar",
+  templateUrl: "./browse-sidebar.component.html",
+  styleUrls: ["./browse-sidebar.component.scss"]
 })
-export class SidebarComponent implements OnInit {
+export class BrowseSidebarComponent implements OnInit {
   showFiller = false;
   @ViewChild("drawer") drawer;
   constructor() {}

@@ -2,10 +2,10 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'hb-browse-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  templateUrl: './browse-header.component.html',
+  styleUrls: ['./browse-header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class BrowseHeaderComponent implements OnInit {
 
   @Output()
   barToggled = new EventEmitter<void>();

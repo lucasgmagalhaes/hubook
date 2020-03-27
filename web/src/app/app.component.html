@@ -1,1 +1,23 @@
-<router-outlet></router-outlet>
+<hb-browse-header
+  *ngIf="isAuthenticated$ | async"
+  (barToggled)="toggleSidebar()"
+></hb-browse-header>
+
+<body>
+  <div class="container">
+    <mat-drawer-container>
+      <mat-drawer
+        #drawer
+        *ngIf="isAuthenticated$ | async"
+        class="sidebar"
+        mode="side"
+      >
+        <hb-browse-sidebar></hb-browse-sidebar>
+      </mat-drawer>
+
+      <div [class.content]="isAuthenticated$ | async">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-drawer-container>
+  </div>
+</body>

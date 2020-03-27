@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import routes from "../routes";
 import { Router } from "@angular/router";
+import { SessionService } from '../core/services/session.service';
 
 @Component({
   selector: "hb-login",
@@ -11,7 +12,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   get register() {
     return `/${routes.register}`;
   }
-  constructor(private router: Router) {}
+  constructor(private router: Router, private sessionService: SessionService) {}
 
   ngOnInit(): void {
     const body = document.getElementsByTagName("body")[0];
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
+    this.sessionService.login();
     this.router.navigate(["browse"]);
   }
 }

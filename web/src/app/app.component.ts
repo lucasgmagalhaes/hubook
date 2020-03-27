@@ -1,24 +1,34 @@
-import { Component } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import webAppVersion from './version';
-import { Router } from '@angular/router';
-import routes from './routes';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { environment } from "src/environments/environment";
+import webAppVersion from "./version";
+import { SessionService } from "./core/services/session.service";
+import { MatDrawer } from "@angular/material/sidenav";
+import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"]
 })
-export class AppComponent {
-  title = 'Hubrary';
+export class AppComponent implements OnInit {
+  title = "Hubrary";
+  isAuthenticated$: Observable<boolean>;
 
-  constructor(private _router: Router){
+  @ViewChild("drawer") private drawer: MatDrawer;
+
+  constructor(private sessionService: SessionService) {
     if (!environment.production) {
-      console.info(`App running in development mode. Version: ${webAppVersion}`);
+      console.info(
+        `App running in development mode. Version: ${webAppVersion}`
+      );
     }
   }
 
-  isAuthPage() {
-    return this._router.url.includes(routes.login) || this._router.url.includes(routes.register);
+  ngOnInit(): void {
+    this.isAuthenticated$ = this.sessionService.isAuthenticated();
+  }
+
+  toggleSidebar() {
+    this.drawer.toggle();
   }
 }
