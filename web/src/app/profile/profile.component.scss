@@ -15,7 +15,8 @@ form {
 }
 
 mat-card {
-  width: 478px;
+  max-width: 478px;
+  width: 100%;
   display: flex;
   align-items: center;
   text-align: center;
