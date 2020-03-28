@@ -4,10 +4,18 @@
 /* ======== Angular material custom themes ======== */
 /* Colors https://material.io/archive/guidelines/style/color.html#color-color-palette */
 
-$light-primary: mat-palette($mat-deep-purple);
+$light-primary: mat-palette($mat-brown);
 $light-accent: mat-palette($mat-brown);
 $light-warn: mat-palette($mat-lime);
 
 $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
+
+.mat-form-field-outline-thick {
+  color: mat-color($light-primary, default) !important;
+}
+
+mat-form-field {
+  width: 100%;
+}
 
 @include angular-material-theme($light-theme);
