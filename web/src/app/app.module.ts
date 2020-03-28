@@ -11,11 +11,11 @@ import { FooterComponent } from "./presentation/footer/footer.component";
 import { RouterModule } from "@angular/router";
 import { ROUTES } from "./app.routing";
 import { PresentationComponent } from "./presentation/presentation.component";
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { BrowseHeaderComponent } from './core/components/browse-header/browse-header.component';
-import { BrowseSidebarComponent } from './core/components/browse-sidebar/browse-sidebar.component';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from "@angular/material/icon";
+import { MatMenuModule } from "@angular/material/menu";
+import { BrowseHeaderComponent } from "./core/components/browse-header/browse-header.component";
+import { BrowseSidebarComponent } from "./core/components/browse-sidebar/browse-sidebar.component";
+import { MatSidenavModule } from "@angular/material/sidenav";
 
 @NgModule({
   declarations: [

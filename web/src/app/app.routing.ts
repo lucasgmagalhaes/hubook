@@ -22,7 +22,6 @@ export const ROUTES: Routes = [
   },
   {
     path: "profile",
-    outlet: "browse-content",
     loadChildren: () =>
       import("./profile/profile.module").then(m => m.ProfileModule)
   }

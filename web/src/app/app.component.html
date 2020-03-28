@@ -3,12 +3,14 @@
   (barToggled)="toggleSidebar()"
 ></hb-browse-header>
 
-<mat-drawer-container style="height: 100%;">
+<mat-drawer-container style="height: 100%; padding-top: 86px;">
   <mat-drawer #drawer *ngIf="true" class="sidebar" mode="side">
     <hb-browse-sidebar></hb-browse-sidebar>
   </mat-drawer>
   <div class="content">
-    <router-outlet></router-outlet>
+    <div class="content-space">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </mat-drawer-container>
 
