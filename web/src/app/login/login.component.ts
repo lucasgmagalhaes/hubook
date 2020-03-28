@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import routes from "../routes";
 import { Router } from "@angular/router";
-import { SessionService } from '../core/services/session.service';
+import { SessionService } from "../core/services/session.service";
 
 @Component({
   selector: "hb-login",
@@ -15,13 +15,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private sessionService: SessionService) {}
 
   ngOnInit(): void {
-    const body = document.getElementsByTagName("body")[0];
+    const body = document.getElementsByTagName("mat-drawer-container")[0];
     body.classList.add("account-background");
   }
 
   ngOnDestroy(): void {
-    const body = document.getElementsByTagName('body')[0];
-    body.classList.remove('account-background');
+    const body = document.getElementsByTagName("mat-drawer-container")[0];
+    body.classList.remove("account-background");
   }
 
   login() {
