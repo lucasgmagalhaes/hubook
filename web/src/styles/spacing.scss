@@ -1,0 +1,37 @@
+$spacer: 1.55px;
+
+@for $i from 1 through 10 {
+  .hb-p-#{$i} {
+    padding: ($i * $spacer) !important;
+  }
+
+  .hb-pl-#{$i} {
+    padding-left: ($i * $spacer) !important;
+  }
+
+  .hb-pr-#{$i} {
+    padding-right: ($i * $spacer) !important;
+  }
+
+  .hb-pt-#{$i} {
+    padding-top: ($i * $spacer) !important;
+  }
+
+  .hb-pb-#{$i} {
+    padding-bottom: ($i * $spacer) !important;
+  }
+
+  .hb-ph-#{$i} {
+    padding-left: ($i * $spacer) !important;
+    padding-right: ($i * $spacer) !important;
+  }
+
+  .hb-pv-#{$i} {
+    padding-top: ($i * $spacer) !important;
+    padding-bottom: ($i * $spacer) !important;
+  }
+
+  .hb-mr-#{$i} {
+    margin-right: ($i * $spacer) !important;
+  }
+}
