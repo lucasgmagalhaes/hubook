@@ -1,12 +1,23 @@
 <div class="profile">
   <mat-card>
-    <form>
-      <div class="img">
-        <span>LG</span>
+    <form [formGroup]="formPerfil">
+      <div
+        matTooltip="Click to pick a new one"
+        class="img"
+        (click)="selectImg()"
+      >
+        <img *ngIf="hasImageDefined()" [src]="img" alt="" />
+        <span *ngIf="!hasImageDefined()">LG</span>
+        <input
+          type="file"
+          id="imgupload"
+          (change)="setFile($event)"
+          style="display:none"
+        />
       </div>
 
       <div class="hb-row hb-w-100">
-        <mat-form-field  class="hb-mr-4" appearance="outline">
+        <mat-form-field class="hb-mr-4" appearance="outline">
           <mat-label>First Name</mat-label>
           <input type="text" matInput />
         </mat-form-field>
@@ -17,21 +28,60 @@
         </mat-form-field>
       </div>
 
-      <mat-form-field>
-        <mat-label>Choose a date</mat-label>
+      <mat-form-field appearance="outline">
+        <mat-label>Birthday</mat-label>
         <input matInput [matDatepicker]="picker" />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Gender</mat-label>
-        <input type="password" matInput />
+        <mat-label>Email</mat-label>
+        <input type="email" matInput />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <input
+          type="text"
+          placeholder="Estado"
+          aria-label="Number"
+          matInput
+          formControlName="estado"
+          [matAutocomplete]="estadoAuto"
+          (focusout)="setCidades()"
+        />
+        <mat-autocomplete #estadoAuto="matAutocomplete">
+          <mat-option
+            *ngFor="let estado of estadosFiltrados | async"
+            [value]="estado"
+          >
+            {{ estado }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <input
+          type="text"
+          placeholder="Cidade"
+          aria-label="Number"
+          formControlName="cidade"
+          matInput
+          [matAutocomplete]="cidadeAuto"
+        />
+        <mat-autocomplete appearance="outline" #cidadeAuto="matAutocomplete">
+          <mat-option
+            *ngFor="let cidade of cidadesFiltradas | async"
+            [value]="cidade"
+          >
+            {{ cidade }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Celphone</mat-label>
-        <input type="password" matInput />
+        <input type="tel" matInput />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -44,9 +94,15 @@
         <input type="password" matInput />
       </mat-form-field>
 
-      <button type="button" mat-raised-button color="accent">
-        Save
-      </button>
+      <div class="hb-row hb-w-100 hb-align-end">
+        <button type="button" class="hb-mr-4" mat-flat-button color="primary">
+          Save
+        </button>
+
+        <button type="button" mat-flat-button color="warn">
+          Cancel
+        </button>
+      </div>
     </form>
   </mat-card>
 </div>

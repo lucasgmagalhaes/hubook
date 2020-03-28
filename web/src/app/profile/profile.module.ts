@@ -2,11 +2,8 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ProfileComponent } from "./profile.component";
 import { Routes, RouterModule } from "@angular/router";
-import { MatCardModule } from "@angular/material/card";
-import { MatButtonModule } from "@angular/material/button";
-import { MatInputModule } from "@angular/material/input";
-import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatNativeDateModule } from '@angular/material/core';
+import { MaterialModule } from "../material/material.module";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
 const ROUTES: Routes = [
   {
@@ -19,11 +16,9 @@ const ROUTES: Routes = [
   declarations: [ProfileComponent],
   imports: [
     CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule,
     RouterModule.forChild(ROUTES)
   ]
 })
