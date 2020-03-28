@@ -21,6 +21,7 @@
   <div class="header-container">
     <div class="end">
       <button
+        [matMenuTriggerFor]="notifications"
         class="icon-header"
         mat-icon-button
         aria-label="Example icon-button with a heart icon"
@@ -28,11 +29,15 @@
         <mat-icon matBadge="15" matBadgeColor="warn">notifications</mat-icon>
       </button>
 
-      <div class="user" [matMenuTriggerFor]="menu">
+      <mat-menu #notifications="matMenu" class="icon-header">
+        <hb-notifications></hb-notifications>
+      </mat-menu>
+
+      <div class="user" [matMenuTriggerFor]="options">
         <span>LG</span>
       </div>
 
-      <mat-menu #menu="matMenu" class="icon-header">
+      <mat-menu #options="matMenu" class="icon-header">
         <button mat-menu-item [routerLink]="'profile'">
           <mat-icon>account_circle</mat-icon>
           <span>Profile</span>

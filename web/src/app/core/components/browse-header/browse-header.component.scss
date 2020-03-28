@@ -79,3 +79,13 @@ input:focus {
   display: flex;
   justify-content: flex-start;
 }
+
+.notifications {
+  max-width: 220px;
+  width: 100%;
+}
+.notification {
+  height: 120px;
+  width: 100%;
+  padding: 11px 17px;
+}
