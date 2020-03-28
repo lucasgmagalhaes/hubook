@@ -1,25 +1,25 @@
-
-@import '~@angular/material/_theming.scss';
+@import "~@angular/material/_theming.scss";
 @include mat-core();
 
 $color: mat-palette($mat-blue, 800) !default;
 
-::ng-deep .mat-input-element{
+// Input text
+.mat-input-element {
   color: $color !important;
 }
 
-::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+// Input placeholder on focus
+.mat-form-field.mat-focused .mat-form-field-label {
   color: $color !important;
 }
 
-::ng-deep .mat-form-field-appearance-outline {
-
-   .mat-form-field-outline {
+.mat-form-field-appearance-outline {
+  .mat-form-field-outline {
     color: $color !important;
   }
 
   .mat-form-field-outline-thick {
-    color: $color !important;
+    color:  !important;
   }
 
   &.mat-focused {
