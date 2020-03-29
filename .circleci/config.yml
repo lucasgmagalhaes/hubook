@@ -6,9 +6,10 @@ orbs:
 jobs:
   build_backend:
     executor: win/default
-    working_directory: ./hubook/Dort
+    working_directory: ~/hubook/Dort
     steps:
-      - checkout
+      - checkout:
+          path: ~/hubook
       - run: dotnet build
 
   build_web:
@@ -16,7 +17,8 @@ jobs:
     docker:
       - image: circleci/node:10-browsers
     steps:
-      - checkout
+      - checkout:
+          path: ~/hubook
       - restore_cache:
           key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
       - run: npm install
