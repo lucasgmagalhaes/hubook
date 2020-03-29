@@ -8,14 +8,14 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\git\Hubrary\Dort\Dort.WebApi\Dort.WebApi.xml</DocumentationFile>
+    <DocumentationFile>$(MSBuildThisFileDirectory)\Dort.WebApi.xml</DocumentationFile>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <Optimize>false</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>D:\git\Hubrary\Dort\Dort.WebApi\Dort.WebApi.xml</DocumentationFile>
+    <DocumentationFile>$(MSBuildThisFileDirectory)\Dort.WebApi.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
