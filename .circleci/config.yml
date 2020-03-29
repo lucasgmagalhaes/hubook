@@ -6,10 +6,10 @@
   jobs:
     build_backend:
       executor: win/default     
-        working_directory: ~/Dort
-        steps:
-          - checkout
-          - run: dotnet build
+      working_directory: ~/Dort
+      steps:
+        - checkout
+        - run: dotnet build
 
     build_web:
       docker:
