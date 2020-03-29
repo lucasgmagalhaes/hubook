@@ -1,0 +1,29 @@
+ version: 2.1
+
+ orbs:
+  win: circleci/windows@2.2.0
+
+workflows:
+  api:
+    jobs:
+      build:
+        executor: win/default     
+        working_directory: ~/Dort
+        steps:
+          - checkout
+          - run: dotnet build
+  web-app:
+    jobs:
+      build:
+        docker:
+          - image: circleci/node:10-browsers
+      steps:
+        - checkout
+        - restore_cache:
+            key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
+        - run: npm install
+        - save_cache:
+            key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
+            paths:
+              - "node_modules"
+        - run: npm run ng build
