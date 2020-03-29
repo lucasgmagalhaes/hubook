@@ -25,11 +25,11 @@
               - "node_modules"
         - run: npm run ng build
 
-workflows:
-  version: 2
-  build_api:
-    jobs:
-      - build_backend
-  build_api:
-    jobs:
-      - build_web
+  workflows:
+    version: 2
+    build_api:
+      jobs:
+        - build_backend
+    build_api:
+      jobs:
+        - build_web
