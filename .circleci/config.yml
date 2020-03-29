@@ -6,7 +6,7 @@ orbs:
 jobs:
   build_backend:
     executor: win/default
-    working_directory: ~/hubook/Dort
+    working_directory: ./hubook/Dort
     steps:
       - checkout
       - run: dotnet build
