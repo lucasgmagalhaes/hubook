@@ -1,0 +1,27 @@
+[
+  {
+    "Nome Patente": "Reader I",
+    "Tier": 1,
+    "Exp Total": 12958
+  },
+  {
+    "Nome Patente": "Reader II",
+    "Tier": 2,
+    "Exp Total": 25916
+  },
+  {
+    "Nome Patente": "Reader III",
+    "Tier": 3,
+    "Exp Total": 38874
+  },
+  {
+    "Nome Patente": "Reader IV",
+    "Tier": 4,
+    "Exp Total": 64790
+  },
+  {
+    "Nome Patente": "Reader V",
+    "Tier": 5,
+    "Exp Total": 77748
+  }
+]

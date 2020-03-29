@@ -1,0 +1,97 @@
+[
+  {
+    "level": 2,
+    "expToAchieve": 124,
+    "totalExp": 124
+  },
+  {
+    "level": 3,
+    "expToAchieve": 186,
+    "totalExp": 310
+  },
+  {
+    "level": 4,
+    "expToAchieve": 248,
+    "totalExp": 558
+  },
+  {
+    "level": 5,
+    "expToAchieve": 310,
+    "totalExp": 868
+  },
+  {
+    "level": 6,
+    "expToAchieve": 372,
+    "totalExp": 1240
+  },
+  {
+    "level": 7,
+    "expToAchieve": 434,
+    "totalExp": 1674
+  },
+  {
+    "level": 8,
+    "expToAchieve": 496,
+    "totalExp": 2170
+  },
+  {
+    "level": 9,
+    "expToAchieve": 558,
+    "totalExp": 2728
+  },
+  {
+    "level": 10,
+    "expToAchieve": 620,
+    "totalExp": 3348
+  },
+  {
+    "level": 11,
+    "expToAchieve": 682,
+    "totalExp": 4030
+  },
+  {
+    "level": 12,
+    "expToAchieve": 744,
+    "totalExp": 4774
+  },
+  {
+    "level": 13,
+    "expToAchieve": 806,
+    "totalExp": 5580
+  },
+  {
+    "level": 14,
+    "expToAchieve": 868,
+    "totalExp": 6448
+  },
+  {
+    "level": 15,
+    "expToAchieve": 930,
+    "totalExp": 7378
+  },
+  {
+    "level": 16,
+    "expToAchieve": 992,
+    "totalExp": 8370
+  },
+  {
+    "level": 17,
+    "expToAchieve": 1054,
+    "totalExp": 9424
+  },
+  {
+    "level": 18,
+    "expToAchieve": 1116,
+    "totalExp": 10540
+  },
+  {
+    "level": 19,
+    "expToAchieve": 1178,
+    "totalExp": 11718
+  },
+  {
+    "level": 20,
+    "expToAchieve": 1240,
+    "totalExp": 12958
+  }
+]
