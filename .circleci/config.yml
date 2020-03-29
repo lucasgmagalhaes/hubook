@@ -6,13 +6,13 @@ orbs:
 jobs:
   build_backend:
     executor: win/default
-    working_directory: ~/hubook/Dort
+    working_directory: ~/project/Dort
     steps:
       - checkout
       - run: dotnet build
 
   build_web:
-    working_directory: ~/hubook/web
+    working_directory: ~/project/web
     docker:
       - image: circleci/node:10-browsers
     steps:
