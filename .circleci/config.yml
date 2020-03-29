@@ -3,7 +3,7 @@
  orbs:
   win: circleci/windows@2.2.0
 
-  workflows:
+ workflows:
     api:
       jobs:
         build:
