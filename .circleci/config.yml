@@ -1,29 +1,37 @@
- version: 2.1
+version: 2.1
 
- orbs:
+orbs:
   win: circleci/windows@2.2.0
 
+jobs:
+  build_backend:
+    executor: win/default
+    working_directory: ~/hubook/Dort
+    steps:
+      - checkout:
+          path: ~/hubook
+      - run: dotnet build
+
+  build_web:
+    working_directory: ~/hubook/web
+    docker:
+      - image: circleci/node:10-browsers
+    steps:
+      - checkout:
+          path: ~/hubook
+      - restore_cache:
+          key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
+      - run: npm install
+      - save_cache:
+          key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - "node_modules"
+      - run: npm run ng build
+
 workflows:
-  api:
+  build_api:
     jobs:
-      build:
-        executor: win/default     
-        working_directory: ~/Dort
-        steps:
-          - checkout
-          - run: dotnet build
-  web-app:
+      - build_backend
+  build_web:
     jobs:
-      build:
-        docker:
-          - image: circleci/node:10-browsers
-      steps:
-        - checkout
-        - restore_cache:
-            key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
-        - run: npm install
-        - save_cache:
-            key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
-            paths:
-              - "node_modules"
-        - run: npm run ng build
+      - build_web
